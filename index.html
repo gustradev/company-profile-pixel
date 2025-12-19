@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Company Profile - CV Cipta Kreasitama (Pixel Solusindo)</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap');
+
+    :root {
+      --ink: #0f172a;
+      --slate: #475569;
+      --line: #d8dee9;
+      --brand: #0b3954;
+      --accent: #2f6f8f;
+      --paper: #f8fafc;
+      --mist: #eef2f7;
+    }
+
+    html, body {
+      font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial;
+      color: var(--ink);
+    }
+
+    h1, h2, h3 {
+      font-family: "Source Serif 4", "Times New Roman", serif;
+      letter-spacing: -0.01em;
+    }
+
+    .bg-atmo {
+      background:
+        radial-gradient(600px 400px at 10% 10%, rgba(11, 57, 84, 0.08), transparent 60%),
+        radial-gradient(600px 400px at 90% 0%, rgba(47, 111, 143, 0.10), transparent 60%),
+        linear-gradient(180deg, #f9fbfe 0%, #f5f7fb 100%);
+    }
+
+    .bg-grid {
+      background-image:
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    .section-rule {
+      border-top: 1px solid var(--line);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .kicker {
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--slate);
+    }
+
+    .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--slate);
+    }
+
+    .note {
+      font-size: 0.92rem;
+      color: var(--slate);
+    }
+
+    .card-flat {
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--slate);
+      background: #fff;
+    }
+
+    .full-bleed {
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @page { size: A4 portrait; margin: 14mm; }
+
+    @media print {
+      html, body { background: #fff !important; color: #000 !important; }
+      .no-print { display: none !important; }
+      section, article, .print-avoid { break-inside: avoid !important; page-break-inside: avoid !important; }
+      .print-break { break-before: page; page-break-before: always; }
+      .sticky { position: static !important; }
+    }
+
+    .reveal {
+      animation: rise 0.7s ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-atmo text-slate-900 leading-relaxed">
+  <div class="no-print sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur">
+    <div class="page flex items-center justify-between py-4">
+      <div class="flex items-center gap-4">
+        <img src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=pixel-solusindo-logo-hd-square-notext-751ad4cd.webp" alt="Pixel Solusindo" class="h-10 w-auto" />
+        <div>
+          <div class="text-sm font-semibold">CV Cipta Kreasitama</div>
+          <div class="text-xs text-slate-500">Pixel Solusindo - Company Profile</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 text-xs text-slate-600">
+        <a href="#overview" class="hover:text-slate-900">Overview</a>
+        <a href="#solutions" class="hover:text-slate-900">Solusi</a>
+        <a href="#contact" class="hover:text-slate-900">Kontak</a>
+        <button onclick="window.print()" class="bg-slate-900 text-white px-4 py-2 text-xs font-semibold">Print / Save PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="full-bleed bg-grid section-rule">
+    <div class="page grid md:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
+      <div class="space-y-6 reveal">
+        <div class="kicker">Company Profile</div>
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900">
+          Partner operasional yang bekerja dengan standar, struktur, dan kepercayaan.
+        </h1>
+        <p class="note max-w-xl">
+          CV Cipta Kreasitama (Pixel Solusindo) berfokus pada sistem keamanan dan infrastruktur operasional
+          yang terukur, terdokumentasi, dan konsisten untuk kebutuhan bisnis, pemerintahan, dan institusi.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <span class="pill">Bali, Indonesia</span>
+          <span class="pill">CCTV dan keamanan</span>
+          <span class="pill">Infrastruktur jaringan</span>
+          <span class="pill">MRO dan pengadaan</span>
+        </div>
+      </div>
+      <div class="card-flat p-4 reveal">
+        <div class="aspect-[4/3] bg-slate-100 overflow-hidden">
+          <img src="./hero.jpg" alt="Implementasi lapangan" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/800x600?text=Company+Hero'" />
+        </div>
+        <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+          <span>Installation - Infrastructure - Operations</span>
+          <img src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png" alt="Pixel Solusindo" class="h-8 w-auto" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page space-y-10">
+    <section id="overview" class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-8">
+        <div>
+          <div class="label">Company overview</div>
+          <h2 class="text-2xl font-semibold mt-2">Identitas Perusahaan</h2>
+          <p class="note mt-4">
+            Dokumen ini disusun sebagai profil resmi dan fleksibel untuk proposal, tender, presentasi klien,
+            serta arsip internal. Format dirancang agar konsisten di digital maupun cetak.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="card-flat p-4">
+            <div class="text-xs text-slate-500">Nama Legal</div>
+            <div class="font-semibold">CV Cipta Kreasitama</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-xs text-slate-500">Brand Operasional</div>
+            <div class="font-semibold">Pixel Solusindo</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-xs text-slate-500">Lokasi</div>
+            <div class="font-semibold">Bali, Indonesia</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
+        <div>
+          <div class="label">Value and positioning</div>
+          <h2 class="text-2xl font-semibold mt-2">Nilai Kerja dan Posisi Layanan</h2>
+          <p class="note mt-4">
+            Kami menjaga kualitas melalui standar kerja, dokumentasi, dan kontrol operasional yang jelas.
+            Fokus utama adalah keberlanjutan sistem, bukan pendekatan hard-selling.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Standar dan SOP</div>
+            <div class="note mt-2">Pemasangan, pengujian, dan serah terima mengikuti prosedur internal yang terdokumentasi.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Transparansi Teknis</div>
+            <div class="note mt-2">Spesifikasi dan cakupan kerja ditulis jelas untuk memastikan tanggung jawab terukur.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Keamanan Berkelanjutan</div>
+            <div class="note mt-2">Fokus pada kestabilan sistem jangka panjang melalui preventive maintenance.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <div class="label">Vision</div>
+          <h2 class="text-2xl font-semibold mt-2">Visi</h2>
+          <p class="note mt-4">
+            Menjadi mitra terpercaya dalam solusi IT terintegrasi di Bali untuk mendukung transformasi digital
+            yang aman, efisien, dan berkelanjutan.
+          </p>
+        </div>
+        <div>
+          <div class="label">Mission</div>
+          <h2 class="text-2xl font-semibold mt-2">Misi</h2>
+          <ul class="mt-4 space-y-2 text-slate-700">
+            <li>- Menyediakan solusi IT yang menyeluruh dan terintegrasi.</li>
+            <li>- Memberikan layanan profesional dengan hasil terukur.</li>
+            <li>- Membangun tim yang kompeten dan adaptif.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-8">
+        <div>
+          <div class="label">Legal and credentials</div>
+          <h2 class="text-2xl font-semibold mt-2">Legalitas dan Kredensial</h2>
+          <p class="note mt-4">Dokumen legal tersedia dalam arsip resmi perusahaan dan dapat disampaikan sesuai kebutuhan.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="card-flat p-4">
+            <div class="text-xs text-slate-500">NPWP</div>
+            <div class="font-mono text-sm">03.326.191.8-906.000</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-xs text-slate-500">NIB</div>
+            <div class="note">Tercantum dalam dokumen resmi perusahaan</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 print-break reveal">
+      <div class="grid md:grid-cols-[1.1fr_0.9fr] gap-8">
+        <div>
+          <div class="label">Organization structure</div>
+          <h2 class="text-2xl font-semibold mt-2">Struktur Organisasi</h2>
+          <p class="note mt-4">
+            Struktur organisasi dirancang agar alur koordinasi dari manajemen hingga pelaksana lapangan
+            berjalan jelas dan terukur.
+          </p>
+        </div>
+        <div class="card-flat p-4">
+          <div class="text-sm font-semibold">Rantai koordinasi utama</div>
+          <div class="mt-3 space-y-2 text-sm text-slate-700">
+            <div>- Managing Director</div>
+            <div>- Chief Marketing Officer</div>
+            <div>- Accounting and Monitoring</div>
+            <div>- Operation Head</div>
+            <div>- Sales and Marketing Head</div>
+            <div>- Engineering Planning SPV</div>
+            <div>- Technician Coordinator</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="solutions" class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-8">
+        <div>
+          <div class="label">Core solutions overview</div>
+          <h2 class="text-2xl font-semibold mt-2">Ruang Lingkup Solusi</h2>
+          <p class="note mt-4">
+            Layanan kami disusun sebagai one-stop HSSEE solutions untuk memastikan kebutuhan keamanan
+            dan operasional berjalan konsisten.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">CCTV dan keamanan</div>
+            <div class="note mt-2">Instalasi terstandar indoor dan outdoor.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Infrastruktur jaringan</div>
+            <div class="note mt-2">Topologi rapi dan mudah dikembangkan.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">MRO</div>
+            <div class="note mt-2">Pemeliharaan preventif dan responsif.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Pengadaan perangkat</div>
+            <div class="note mt-2">Perangkat resmi sesuai kebutuhan.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 reveal">
+      <div class="space-y-8">
+        <div class="grid md:grid-cols-[0.9fr_1.1fr] gap-8 items-center">
+          <div class="card-flat p-4">
+            <div class="aspect-[4/3] bg-slate-100"></div>
+          </div>
+          <div>
+            <div class="label">Solution detail</div>
+            <h3 class="text-xl font-semibold mt-2">CCTV dan keamanan</h3>
+            <p class="note mt-3">
+              Fokus pada instalasi yang terdokumentasi, pengujian rekaman, dan pelatihan dasar penggunaan.
+              Sistem disusun agar dapat dipertanggungjawabkan secara teknis.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+          <div>
+            <div class="label">Solution detail</div>
+            <h3 class="text-xl font-semibold mt-2">Infrastruktur jaringan</h3>
+            <p class="note mt-3">
+              Penataan jaringan dilakukan sejak tahap perencanaan agar sistem stabil, mudah dikembangkan,
+              dan tidak menjadi sumber masalah operasional.
+            </p>
+          </div>
+          <div class="card-flat p-4">
+            <div class="aspect-[4/3] bg-slate-100"></div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-[0.9fr_1.1fr] gap-8 items-center">
+          <div class="card-flat p-4">
+            <div class="aspect-[4/3] bg-slate-100"></div>
+          </div>
+          <div>
+            <div class="label">Solution detail</div>
+            <h3 class="text-xl font-semibold mt-2">Maintenance, Repair and Overhaul</h3>
+            <p class="note mt-3">
+              Program pemeliharaan membantu mencegah gangguan kecil berkembang menjadi masalah besar.
+              Dokumentasi kondisi sistem menjadi bagian dari siklus kerja rutin.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+          <div>
+            <div class="label">Solution detail</div>
+            <h3 class="text-xl font-semibold mt-2">Pengadaan perangkat</h3>
+            <p class="note mt-3">
+              Pengadaan dilakukan dengan kejelasan asal perangkat, spesifikasi yang sesuai kebutuhan,
+              dan dukungan purna jual yang dapat dipertanggungjawabkan.
+            </p>
+          </div>
+          <div class="card-flat p-4">
+            <div class="aspect-[4/3] bg-slate-100"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 print-break reveal">
+      <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
+        <div>
+          <div class="label">Project map</div>
+          <h2 class="text-2xl font-semibold mt-2">Cakupan Proyek Bali</h2>
+          <p class="note mt-4">
+            Cakupan proyek tersebar di beberapa area utama di Bali. Visual berikut adalah peta konseptual
+            untuk memperlihatkan sebaran wilayah kerja.
+          </p>
+          <div class="mt-6 card-flat p-4">
+            <svg viewBox="0 0 520 280" class="w-full h-56">
+              <rect x="1" y="1" width="518" height="278" fill="#f1f5f9" stroke="#d8dee9" />
+              <circle cx="120" cy="170" r="6" fill="#0b3954" />
+              <circle cx="220" cy="120" r="6" fill="#0b3954" />
+              <circle cx="320" cy="150" r="6" fill="#0b3954" />
+              <circle cx="380" cy="90" r="6" fill="#0b3954" />
+              <circle cx="430" cy="190" r="6" fill="#0b3954" />
+              <text x="20" y="30" fill="#475569" font-size="12">Bali - Project Coverage (conceptual)</text>
+            </svg>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Area fokus</div>
+            <div class="mt-2 text-sm text-slate-600">
+              Denpasar, Badung, Gianyar, Tabanan, dan area sekitarnya.
+            </div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Jenis lokasi</div>
+            <div class="mt-2 text-sm text-slate-600">
+              Perkantoran, area komersial, villa, gudang, dan fasilitas publik.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-8">
+        <div>
+          <div class="label">Project snapshot</div>
+          <h2 class="text-2xl font-semibold mt-2">Ringkasan Proyek dan Klien</h2>
+          <p class="note mt-4">
+            Ringkasan berikut menggambarkan tipe pekerjaan yang umum kami jalankan. Daftar spesifik
+            tersedia dalam dokumen pendukung.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Pemasangan CCTV</div>
+            <div class="note mt-2">Perkantoran, vila, area komersial.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Infrastruktur jaringan</div>
+            <div class="note mt-2">Topologi kantor, area proyek, gudang.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">MRO berkala</div>
+            <div class="note mt-2">Pemeliharaan sistem keamanan dan IT.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Pengadaan</div>
+            <div class="note mt-2">Perangkat resmi sesuai kebutuhan proyek.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-rule pt-8 reveal">
+      <div class="grid md:grid-cols-[1.1fr_0.9fr] gap-8">
+        <div>
+          <div class="label">Trust and experience</div>
+          <h2 class="text-2xl font-semibold mt-2">Kepercayaan dan Pengalaman</h2>
+          <p class="note mt-4">
+            Kepercayaan dibangun melalui konsistensi, dokumentasi, dan respons yang dapat diandalkan.
+            Setiap proyek didampingi koordinasi yang rapi dan laporan yang jelas.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Dokumentasi kerja</div>
+            <div class="note mt-2">Checklist dan laporan sebagai arsip operasional.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Standar pengujian</div>
+            <div class="note mt-2">Uji fungsi dan serah terima terukur.</div>
+          </div>
+          <div class="card-flat p-4">
+            <div class="text-sm font-semibold">Pendampingan pasca proyek</div>
+            <div class="note mt-2">Pemeliharaan dan pembaruan sesuai kebutuhan.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section id="contact" class="section-rule pt-10 full-bleed bg-white">
+    <div class="page grid md:grid-cols-[1fr_1fr] gap-10 items-start">
+      <div>
+        <div class="label">Contact</div>
+        <h2 class="text-2xl font-semibold mt-2">Kontak Perusahaan</h2>
+        <p class="note mt-4">
+          Hubungi kami untuk diskusi kebutuhan CCTV, infrastruktur jaringan, pengadaan, atau layanan MRO.
+        </p>
+        <div class="mt-6 space-y-3 text-sm text-slate-700">
+          <div><span class="font-semibold">Telepon</span>: +62 81139618857</div>
+          <div><span class="font-semibold">Email</span>: ciptakreasitama.ind@gmail.com</div>
+          <div><span class="font-semibold">Alamat</span>: Jl. Kopral I Nym Suwena No.49, Buduk, Mengwi, Badung, Bali</div>
+        </div>
+      </div>
+      <div class="card-flat p-6 bg-slate-50">
+        <div class="label">Closing statement</div>
+        <h3 class="text-xl font-semibold mt-2">Penutup</h3>
+        <p class="note mt-4">
+          Kami siap menjadi partner operasional dengan standar kerja yang jelas, struktur rapi,
+          dan fokus pada keberlanjutan sistem. Terima kasih atas kepercayaan Anda.
+        </p>
+        <div class="mt-6">
+          <a href="mailto:ciptakreasitama.ind@gmail.com" class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-3 text-sm font-semibold">
+            Kirim Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="section-rule bg-white">
+    <div class="page flex flex-col md:flex-row justify-between gap-3 text-xs text-slate-500">
+      <div>CV Cipta Kreasitama - Pixel Solusindo</div>
+      <div>Company Profile - 2025</div>
+    </div>
+  </footer>
+</body>
+</html>

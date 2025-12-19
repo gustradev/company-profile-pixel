@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cemagi",
+    "name": "Desa Cemagi",
+    "area": "Badung",
+    "point": [-8.6392, 115.1238],
+    "card": [-8.70, 114.45],
+    "photo": "https://placehold.co/260x150"
+  },
+  {
+    "id": "deloca",
+    "name": "De Loca Villa",
+    "area": "Badung",
+    "point": [-8.6795, 115.1623],
+    "card": [-8.70, 115.90],
+    "photo": "https://placehold.co/260x150"
+  },
+  {
+    "id": "office",
+    "name": "Office Area",
+    "area": "Denpasar",
+    "point": [-8.6501, 115.2169],
+    "card": [-7.90, 116.15],
+    "photo": "https://placehold.co/260x150"
+  },
+  {
+    "id": "gudang",
+    "name": "Gudang Logistik",
+    "area": "Gianyar",
+    "point": [-8.5941, 115.2045],
+    "card": [-8.10, 115.25], 
+    "photo": "https://placehold.co/260x150"
+  },
+  {
+    "id": "retail",
+    "name": "Retail Commercial",
+    "area": "Tabanan",
+    "point": [-8.6196, 115.1538],
+    "card": [-8.10, 114.40],
+    "photo": "https://placehold.co/260x150"
+  }
+]
