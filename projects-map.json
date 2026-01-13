@@ -1,40 +1,40 @@
 [
   {
     "id": "desa-cemagi",
-    "name": "Desa Cemagi — Sistem CCTV Publik",
+    "name": "Desa Cemagi",
     "area": "Badung",
     "point": [-8.6496, 115.1445],
-    "card": [-8.01, 114.40],
-    "photo": "./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg",
+    "card": [-7.40, 114.40],
+    "photo": "./top-current-clients/desaCemagi/cemagi3.png",
     "cardAnchor": [90, 0]
   },
   {
     "id": "desa-pererenan",
-    "name": "Desa Pererenan — Desa Digital",
+    "name": "Desa Pererenan",
     "area": "Badung",
     "point": [-8.7057, 115.1661],
-    "card": [-8.50, 114.40],
+    "card": [-8.60, 114.40],
     
-    "photo": "./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg",
+    "photo": "./top-current-clients/desa-Pererenan/pererenan-kantordesa.png",
     "cardAnchor": [90, 0]
   },
   {
     "id": "de-lhoka",
-    "name": "de Lhoka Ubud — Resort Network",
+    "name": "de Lhoka Ubud",
     "area": "Ubud",
     "point": [-8.5061, 115.2628],
-    "card": [-7.90, 116.15],
-    "photo": "./top-current-clients/deLhokaUbud/de-lhoka-136.jpg",
+    "card": [-7.40, 116.15],
+    "photo": "./top-current-clients/deLhokaUbud/DJI_0757.JPG",
     "cardAnchor": [45, 0]
   },
   {
     "id": "arkac",
-    "name": "Arkac — Commercial Campus",
+    "name": "Arkac",
     "area": "Denpasar",
     "point": [-8.6669, 115.2162],
     
-    "card": [-8.40, 116.25],
+    "card": [-8.60, 116.15],
     "photo": "./top-current-clients/arkac/Arkac2front.jpeg",
-    "cardAnchor": [90, 0]
+    "cardAnchor": [45, 0]
   }
 ]

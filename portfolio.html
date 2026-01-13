@@ -64,6 +64,7 @@
 }
 
 #map-wrapper .leaflet-container,
+#baliMap,
 #branchMap,
 .branch-map-canvas {
   pointer-events: none;
@@ -88,12 +89,13 @@
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     width: 100vw;
+    min-height: 270px;
   }
 }
 
-  .map-overlay {
-    position: absolute;
-    bottom: 1rem;
+.map-overlay {
+  position: absolute;
+  bottom: 1rem;
   left: 1.25rem;
   background: rgba(255,255,255,.92);
   border: 1px solid rgba(226,232,240,.8);
@@ -103,6 +105,174 @@
   z-index: 10;
   color: #0f172a;
   font-weight: 600;
+  pointer-events: none;
+}
+
+.service-grid {
+  gap: 1rem;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  padding-top: 0.25rem;
+  text-align: center;
+}
+
+.service-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(248, 250, 252, 0.9);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+}
+
+.service-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: 0;
+}
+
+.service-meta {
+  font-size: 0.8rem;
+  color: #475569;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .service-grid {
+    gap: 0.65rem;
+  }
+
+  .service-icon {
+    width: 62px;
+    height: 62px;
+  }
+
+  .service-title {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .service-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .service-title {
+    font-size: 0.9rem;
+  }
+
+  .service-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+  }
+}
+
+.project-card {
+  pointer-events: none;
+}
+
+.project-card__inner {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card__image {
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+}
+
+.project-card__copy {
+  padding: 8px;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-card__title {
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+  word-break: break-word;
+}
+
+.project-card__area {
+  color: #64748b;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .project-card {
+    font-size: 0.8rem;
+  }
+
+  .project-card__inner {
+    width: 140px;
+  }
+
+  .project-card__image {
+    height: 72px;
+  }
+
+  .project-card__title {
+    font-size: 0.9rem;
+  }
+
+  .project-card__area {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-card {
+    font-size: 0.7rem;
+  }
+
+  .project-card__inner {
+    width: 100px;
+  }
+
+  .project-card__image {
+    height: 56px;
+  }
+
+  .project-card__title {
+    font-size: 0.75rem;
+  }
+
+  .project-card__area {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    display: none;
+  }
 }
 
 .marquee-wrapper {
@@ -141,47 +311,95 @@
 }
 
 .branch-label-card {
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(65, 17, 3, 0.95);
   color: #f8fafc;
-  border-radius: 999px;
-  padding: 0.35rem 1.1rem;
+  border-radius: 16px;
+  padding: 0.4rem 0.9rem;
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.15em;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  border: 1px solid rgba(148, 163, 184, 0.6);
+  gap: 0.75rem;
+  border: 1px solid rgba(184, 159, 148, 0.5);
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  min-width: 240px;
+  max-width: none;
+  white-space: normal;
+}
+
+.branch-label-card .branch-label-icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+@media (max-width: 640px) {
+  .branch-label-card {
+    font-size: 10px;
+    min-width: 160px;
+    padding: 0.25rem 0.75rem;
+    gap: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .branch-label-card .branch-label-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .branch-label-text span {
+    font-size: 10px;
+  }
 }
 
 .branch-label-card.store {
-  background: rgba(37, 99, 235, 0.92);
-  border-color: rgba(224, 231, 255, 0.5);
+  background: rgba(68, 32, 8, 0.92);
+  border-color: rgba(255, 181, 112, 0.6);
 }
 
 .branch-label-card.office {
-  background: rgba(249, 115, 22, 0.95);
-  border-color: rgba(255, 241, 209, 0.6);
+  background: rgba(100, 54, 2, 0.95);
+  border-color: rgba(249, 115, 22, 0.7);
 }
 
 .branch-label-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.85);
+  width: 30px;
+  height: 30px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.branch-label-card.office .branch-label-icon {
-  background: rgba(255, 255, 255, 0.25);
+.branch-label-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-transform: none;
+  word-break: break-word;
+  align-items: flex-start;
 }
 
-.branch-label-card.store .branch-label-icon {
-  background: rgba(15, 23, 42, 0.6);
+.branch-label-title {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.branch-label-meta {
+  font-size: 11px;
+  color: #cbd5f5;
+  letter-spacing: 0.25em;
+}
+
+.branch-label-submeta {
+  font-size: 10px;
+  color: rgba(248, 250, 252, 0.75);
+  letter-spacing: 0.2em;
 }
 
 .map-embed {
@@ -228,16 +446,101 @@
 .branch-map-full {
   position: relative;
   left: 50%;
-  right: 50%;
   width: 100vw;
   margin-left: -50vw;
   margin-right: -50vw;
-  background: rgba(15, 23, 42, 0.05);
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(77, 42, 3, 0.9), rgba(95, 16, 2, 0.65));
+  box-shadow: inset 0 0 80px rgba(128, 54, 5, 0.8);
+  min-height: 520px;
+}
+
+.branch-map-panel {
+  position: relative;
+  min-height: 520px;
+  height: clamp(420px, 60vw, 640px);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  margin: 0 auto;
+}
+
+.branch-map-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 24%, rgba(255, 255, 255, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(246, 128, 59, 0.22), transparent 42%),
+    linear-gradient(180deg, rgba(100, 53, 25, 0.55), rgba(87, 43, 1, 0.45));
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 0;
+  mix-blend-mode: screen;
 }
 
 .branch-map-canvas {
-  width: 100vw;
-  min-height: 440px;
+  width: 100%;
+  height: 100%;
+}
+
+#branchMap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: saturate(1.05) brightness(1.05);
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .branch-map-full {
+    min-height: 260px;
+  }
+
+  .branch-map-panel {
+    min-height: 220px;
+    height: 100vw;
+  }
+}
+
+.branch-map-panel {
+  position: relative;
+  min-height: 260px;
+  height: clamp(420px, 60vw, 640px);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  margin: 0 auto;
+}
+
+.branch-map-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 24%, rgba(255, 255, 255, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(102, 46, 1, 0.22), transparent 42%),
+    linear-gradient(180deg, rgba(95, 66, 4, 0.55), rgba(105, 44, 4, 0.45));
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+.branch-map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+#branchMap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: saturate(1.05) brightness(1.05);
+  z-index: 1;
 }
 
   </style>
@@ -247,13 +550,13 @@
 <!-- ================= PAGE : HERO (A4 LANDSCAPE • PIXEL SOLUSINDO) ================= -->
 <section class="page-landscape bg-grid print-avoid">
 
-  <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col h-full">
+  <div class="border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col h-full w-full rounded-none">
 
     <!-- TOP : IDENTITY -->
     <div class="px-14 pt-10 pb-6">
-      <div class="flex items-center gap-4">
+      <div class="flex flex-col gap-4 md:flex-row md:items-center">
         <!-- LOGO PIXEL SOLUSINDO -->
-        <div class="h-14 flex items-center">
+        <div class="hidden md:flex h-14 items-center">
           <img
             src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=pixel-solusindo-logo-hd-square-notext-751ad4cd.webp"
             alt="Pixel Solusindo"
@@ -262,20 +565,18 @@
         </div>
 
         <div>
-          <div class="text-xs uppercase tracking-widest text-slate-500">
-            Company Portfolio
-          </div>
-          <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">
+          <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 flex flex-wrap items-center gap-4">
+            PORTFOLIO
             <img
-            src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png"
-            alt="Pixel Solusindo"
-            class="h-12 w-auto"
-          />
+              src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png"
+              alt="Pixel Solusindo"
+              class="h-10 w-auto md:h-12"
+            />
           </h1>
         </div>
       </div>
 
-      <p class="mt-5 max-w-4xl text-lg leading-relaxed text-slate-600">
+      <p class="mt-5 text-base md:text-lg leading-relaxed text-slate-600 max-w-full md:max-w-4xl">
         Kami membangun sistem operasional dan keamanan dengan pendekatan
         <span class="font-semibold text-slate-800">standar kerja</span>,
         <span class="font-semibold text-slate-800">struktur yang rapi</span>,
@@ -286,7 +587,7 @@
     </div>
 
     <!-- CENTER : FULL WIDTH PHOTO STRIP -->
-    <div class="relative mx-0 h-[78mm]">
+    <div class="relative mx-0 h-[92mm]">
       <img
         src="./hero.jpg"
         alt="Infrastructure & Installation Environment"
@@ -306,58 +607,58 @@
     </div>
 
     <!-- BOTTOM : SCOPE ICONS -->
-    <div class="px-14 pt-8 pb-10 mt-auto">
-      <div class="grid grid-cols-4 gap-10 text-center">
+    <div class="px-6 pt-6 pb-10 mt-auto">
+      <div class="grid grid-cols-2 gap-6 md:grid-cols-4 service-grid text-center">
 
         <!-- CCTV -->
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-10 w-10 text-slate-700" fill="none">
               <rect x="6" y="18" width="28" height="14" rx="4" stroke="currentColor" stroke-width="2"/>
               <circle cx="26" cy="25" r="4" stroke="currentColor" stroke-width="2"/>
               <path d="M34 20l8-8" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="font-semibold text-slate-800">CCTV Systems</div>
-          <div class="text-xs text-slate-500">Certified installation</div>
+          <div class="service-title">CCTV Systems</div>
+          <div class="service-meta">Certified installation</div>
         </div>
 
         <!-- NETWORK -->
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-10 w-10 text-slate-700" fill="none">
               <rect x="6" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
               <rect x="30" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
               <rect x="18" y="28" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
               <path d="M12 20v6l12 4l12-4v-6" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="font-semibold text-slate-800">Network</div>
-          <div class="text-xs text-slate-500">Structured infrastructure</div>
+          <div class="service-title">Network</div>
+          <div class="service-meta">Structured infrastructure</div>
         </div>
 
         <!-- MRO -->
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-10 w-10 text-slate-700" fill="none">
               <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/>
               <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="font-semibold text-slate-800">MRO</div>
-          <div class="text-xs text-slate-500">Preventive maintenance</div>
+          <div class="service-title">MRO</div>
+          <div class="service-meta">Preventive maintenance</div>
         </div>
 
         <!-- PROCUREMENT -->
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-10 w-10 text-slate-700" fill="none">
               <rect x="10" y="16" width="28" height="18" rx="4" stroke="currentColor" stroke-width="2"/>
               <path d="M18 16v-4h12v4" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="font-semibold text-slate-800">Procurement</div>
-          <div class="text-xs text-slate-500">Authorized devices</div>
+          <div class="service-title">Procurement</div>
+          <div class="service-meta">Authorized devices</div>
         </div>
 
       </div>
@@ -392,7 +693,7 @@
     </div>
 
     <!-- MAP FULL WIDTH -->
-    <div class="relative flex-1 mx-0 min-h-[460px] md:min-h-[620px]">
+    <div class="relative flex-1 mx-0 min-h-[360px] md:min-h-[620px]">
       <div class="map-frame">
         <div id="baliMap"></div>
         <div class="map-overlay">
@@ -435,7 +736,7 @@ const fallbackProjects = [
     "area": "Badung",
     "point": [-8.6496, 115.1445],
     "card": [-8.70, 114.45],
-    "photo": "./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg",
+    "photo": "./top-current-clients/desaCemagi/cemagi3.png",
     "cardAnchor": [90, 0]
   },
   {
@@ -444,7 +745,7 @@ const fallbackProjects = [
     "area": "Badung",
     "point": [-8.7057, 115.1661],
     "card": [-8.10, 114.40],
-    "photo": "./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg",
+    "photo": "./top-current-clients/desa-Pererenan/pererenan-kantordesa.png",
     "cardAnchor": [90, 0]
   },
   {
@@ -453,12 +754,12 @@ const fallbackProjects = [
     "area": "Ubud",
     "point": [-8.5061, 115.2628],
     "card": [-8.40, 115.25],
-    "photo": "./top-current-clients/deLhokaUbud/de-lhoka-136.jpg",
+    "photo": "./top-current-clients/deLhokaUbud/DJI_0757.JPG",
     "cardAnchor": [45, 0]
   },
   {
     "id": "arkac",
-    "name": "Arkac — Commercial Campus",
+    "name": "Arkac — Drink & Grill",
     "area": "Denpasar",
     "point": [-8.6669, 115.2162],
     "card": [-7.90, 116.15],
@@ -469,34 +770,52 @@ const fallbackProjects = [
 
 const fallbackBranchLocations = [
   {
-    name: "Pixel Solusindo Head Office",
-    coords: [-8.608127805538013, 115.16082002286291],
-    type: "office",
-    label: "Head office",
-    labelAnchor: [-78, -40],
-    infoText: "Head Office",
-    markerAnchor: [31, 62],
-    floatingIcon: "building"
+    "id": "head-office",
+    "name": "Pixel Solusindo Head Office",
+    "coords": [-8.608127805538013, 115.16082002286291],
+    "type": "office",
+    "label": "Head Office",
+    "infoText": "Information services",
+    "infoMeta": "Buduk • Mengwi, Badung",
+    "markerAnchor": [27, 70],
+    "pinSize": [48, 72],
+    "labelAnchor": [-150, -38],
+    "lineAnchor": [-110, -18],
+    "floatingIcon": "office",
+    "pinColor": "#f97316",
+    "labelWidth": 120
   },
   {
-    name: "Pixel Solusindo Cabang Lukluk",
-    coords: [-8.581704000019169, 115.19067682636204],
-    type: "store",
-    label: "Cabang Lukluk",
-    labelAnchor: [72, -40],
-    infoText: "Cabang Lukluk",
-    markerAnchor: [20, 40],
-    floatingIcon: "store"
+    "id": "cabang-lukluk",
+    "name": "Pixel Solusindo Cabang Lukluk",
+    "coords": [-8.581704000019169, 115.19067682636204],
+    "type": "store",
+    "label": "Cabang Lukluk",
+    "infoText": "Security system supplier",
+    "infoMeta": "Lukluk • Mengwi",
+    "markerAnchor": [26, 60],
+    "pinSize": [44, 62],
+    "labelAnchor": [120, -38],
+    "lineAnchor": [82, -18],
+    "floatingIcon": "store",
+    "pinColor": "#22c55e",
+    "labelWidth": 210
   },
   {
-    name: "Pixel Solusindo Cabang Bangli",
-    coords: [-8.349157071422475, 115.35026819236644],
-    type: "store",
-    label: "Cabang Bangli",
-    labelAnchor: [72, -40],
-    infoText: "Cabang Bangli",
-    markerAnchor: [20, 40],
-    floatingIcon: "store"
+    "id": "cabang-bangli",
+    "name": "Pixel Solusindo Cabang Bangli",
+    "coords": [-8.349157071422475, 115.35026819236644],
+    "type": "store",
+    "label": "Cabang Bangli",
+    "infoText": "Computer store",
+    "infoMeta": "Bangli • Susut",
+    "markerAnchor": [26, 60],
+    "pinSize": [44, 62],
+    "labelAnchor": [120, -38],
+    "lineAnchor": [92, -12],
+    "floatingIcon": "store",
+    "pinColor": "#22c55e",
+    "labelWidth": 210
   }
 ];
 
@@ -533,7 +852,8 @@ const baliBounds = [
 ];
 
 const fitBaliView = () => {
-  const padding = window.innerWidth < 768 ? [140, 140] : [50, 50];
+  const basePadding = [60, 60];
+  const padding = window.innerWidth < 768 ? basePadding : basePadding;
   map.invalidateSize();
   map.fitBounds(baliBounds, {
     padding,
@@ -554,6 +874,30 @@ window.addEventListener("resize", () => setTimeout(fitBaliView, 150));
    ========================================================= */
 safeLoadJson('./projects-map.json', fallbackProjects)
   .then(projects => drawProjects(projects));
+
+function getProjectCardConfig() {
+  const isMobile = window.innerWidth < 768;
+  const isPocket = window.innerWidth < 640;
+  if (isPocket) {
+    return {
+      size: [100, 100],
+      imageHeight: 56,
+      anchorOffset: 60
+    };
+  }
+  if (isMobile) {
+    return {
+      size: [130, 115],
+      imageHeight: 66,
+      anchorOffset: 65
+    };
+  }
+  return {
+    size: [180, 150],
+    imageHeight: 96,
+    anchorOffset: 90
+  };
+}
 
 /* =========================================================
    DRAW PROJECTS
@@ -578,27 +922,23 @@ function drawProjects(projects) {
     }).addTo(map);
 
     // INFO CARD
-    const infoAnchor = p.cardAnchor || [90, 0];
+    const cardConfig = getProjectCardConfig();
+    const cardSize = cardConfig.size;
+    const anchorOffsetX = cardConfig.anchorOffset || cardSize[0] / 2;
+    const infoAnchor = p.cardAnchor || [anchorOffsetX, 0];
     L.marker(p.card, {
       icon: L.divIcon({
-        className: "",
+        className: "project-card",
         html: `
-          <div style="
-            width:180px;
-            background:#ffffff;
-            border-radius:12px;
-            border:1px solid #e5e7eb;
-            box-shadow:0 6px 18px rgba(0,0,0,.12);
-            overflow:hidden;
-            font-size:11px;
-          ">
-            <img src="${p.photo}" style="width:100%;height:96px;object-fit:cover">
-            <div style="padding:8px">
-              <div style="font-weight:600;color:#0f172a">${p.name}</div>
-              <div style="color:#64748b">${p.area}</div>
+          <article class="project-card__inner">
+            <img src="${p.photo}" alt="${p.name}" class="project-card__image" style="height:${cardConfig.imageHeight}px">
+            <div class="project-card__copy">
+              <div class="project-card__title">${p.name}</div>
+              <div class="project-card__area">${p.area}</div>
             </div>
-          </div>
+          </article>
         `,
+        iconSize: cardSize,
         iconAnchor: infoAnchor
       })
     }).addTo(map);
@@ -609,46 +949,68 @@ function drawProjects(projects) {
 }
 
 function buildBranchIcon(branch) {
-  const size = branch.type === "office" ? 62 : 40;
-  const halo = branch.type === "office" ? "#f97316" : "#22c55e";
+  const size = branch.pinSize || (branch.type === "office" ? [48, 70] : [42, 60]);
+  const anchor = branch.markerAnchor || [size[0] / 2, size[1]];
+  const pinColor = branch.pinColor || (branch.type === "office" ? "#f97316" : "#0f172a");
+  const pinPath = branch.pinPath || "M12 2C8.13 2 5 5.13 5 9c0 5.25 5 11.46 7 13.82 2-2.36 7-8.57 7-13.82 0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 2.5-2.5 2.5 2.5 0 0 1-2.5 2.5z";
   return L.divIcon({
     className: "",
     html: `
       <div style="
-        width:${size}px;
-        height:${size}px;
+        width:${size[0]}px;
+        height:${size[1]}px;
         display:flex;
         align-items:center;
         justify-content:center;
-        background:transparent;
-        box-shadow:none;
       ">
-        <svg viewBox="0 0 24 24" class="h-7 w-7">
-          <path d="M12 2C8.1 2 5 5.1 5 9c0 5.5 6.5 12.5 6.5 12.5S18 14.5 18 9c0-3.9-3.1-7-6-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="${halo}"/>
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width:100%;height:100%;">
+          <path d="${pinPath}" fill="${pinColor}"></path>
         </svg>
       </div>
     `,
-    iconSize: [size, size],
-    iconAnchor: branch.markerAnchor || [size / 2, size],
-    popupAnchor: branch.popupAnchor || [0, -size - 10]
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: branch.popupAnchor || [0, -size[1] - 10]
   });
 }
 
 function buildFloatingLabel(branch) {
-  const iconPath = branch.floatingIcon === "building"
-    ? "M4 22V5h16v17H4zm2-2h12V7H6zm2-4h4v4H8zm6 0h2v4h-2zm-6-6h4v2H8zm6 0h2v2h-2z"
-    : "M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h8v2H4";
+  const iconPaths = {
+    office: "M4 22V5h16v17H4zm2-2h12V7H6zm2-4h4v4H8zm6 0h2v4h-2zm-6-6h4v2H8zm6 0h2v2h-2z",
+    store: "M3 10l9-5 9 5v11H3zM3 22h18v2H3z"
+  };
+  const iconPath = iconPaths[branch.floatingIcon] || iconPaths.store;
+  const textLength = Math.max(
+    branch.label?.length || 0,
+    branch.infoText?.length || 0,
+    branch.infoMeta?.length || 0
+  );
+  const computedWidth = Math.min(340, Math.max(200, 70 + textLength * 6));
+  const width = branch.labelWidth || computedWidth;
+  const background = branch.labelColor || (branch.type === "office" ? "rgba(15, 23, 42, 0.95)" : "rgba(15, 23, 42, 0.92)");
+  const border = branch.labelBorderColor || (branch.type === "office" ? "rgba(249, 115, 22, 0.7)" : "rgba(37, 99, 235, 0.6)");
+  const textColor = branch.labelTextColor || "#f8fafc";
   return L.divIcon({
-    className: `branch-label-card ${branch.type}`,
+    className: "",
     html: `
-      <span class="branch-label-icon">
-        <svg viewBox="0 0 24 24" fill="white" class="h-3 w-3">
-          <path d="${iconPath}"/>
-        </svg>
-      </span>
-      <span>${branch.infoText}</span>
+      <div class="branch-label-card ${branch.type}" style="
+        background:${background};
+        border-color:${border};
+        color:${textColor};
+      ">
+        <span class="branch-label-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white" class="h-4 w-4">
+            <path d="${iconPath}"/>
+          </svg>
+        </span>
+        <span class="branch-label-text">
+          <span class="branch-label-title">${branch.label}</span>
+          ${branch.infoText ? `<span class="branch-label-meta">${branch.infoText}</span>` : ""}
+          ${branch.infoMeta ? `<span class="branch-label-submeta">${branch.infoMeta}</span>` : ""}
+        </span>
+      </div>
     `,
-    iconSize: [170, 40],
+    iconSize: [width, 56],
     iconAnchor: [0, 0]
   });
 }
@@ -668,6 +1030,8 @@ document.addEventListener("DOMContentLoaded", () => {
     touchZoom: false
   });
 
+  branchMap.setView([-8.55, 115.25], 9);
+
   L.tileLayer(
     "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
     { maxZoom: 18 }
@@ -677,7 +1041,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const refreshView = () => {
     branchMap.invalidateSize();
     if (bounds.isValid()) {
-      branchMap.fitBounds(bounds, { padding: [60, 60] });
+      const paddedBounds = bounds.pad(0.25);
+      branchMap.fitBounds(paddedBounds, {
+        padding: [80, 80],
+        animate: false
+      });
     }
   };
 
@@ -694,21 +1062,26 @@ document.addEventListener("DOMContentLoaded", () => {
           `)
           .addTo(branchMap);
 
-        const labelAnchor = branch.labelAnchor || branch.infoAnchor || [0, 0];
         const originPoint = branchMap.latLngToLayerPoint(branch.coords);
+        const labelAnchor = branch.labelAnchor || [branch.type === "office" ? -130 : 120, -38];
         const labelPoint = branchMap.layerPointToLatLng(
           originPoint.add(L.point(labelAnchor[0], labelAnchor[1]))
         );
+        const linePoint = branch.lineAnchor
+          ? branchMap.layerPointToLatLng(
+              originPoint.add(L.point(branch.lineAnchor[0], branch.lineAnchor[1]))
+            )
+          : labelPoint;
         L.polyline(
-          [branch.coords, labelPoint],
-          { color: "#94a3b8", weight: 1, dashArray: "4 3", opacity: 0.7 }
+          [branch.coords, linePoint],
+          { color: "#f97316", weight: 1.5, dashArray: "6 5", opacity: 0.7 }
         ).addTo(branchMap);
 
         L.marker(branch.coords, {
           icon: buildFloatingLabel(branch),
           interactive: false
         })
-          .setLatLng(labelPoint) 
+          .setLatLng(labelPoint)
           .addTo(branchMap);
       });
 
@@ -772,7 +1145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="grid md:grid-cols-3 gap-4">
           <div class="h-[160px] border border-slate-200 shadow-lg overflow-hidden">
-            <img src="./top-current-clients/desaCemagi/cemagi.png" alt="Desa Cemagi field" class="w-full h-full object-cover" />
+            <img src="./top-current-clients/desaCemagi/Penjor-Persiapan-Karya-di-Pura-Gede-Luhur-Batungaus_742594.jpeg" alt="Desa Cemagi field" class="w-full h-full object-cover" />
           </div>
           <div class="h-[160px] border border-slate-200 shadow-lg overflow-hidden">
             <img src="./top-current-clients/desaCemagi/cemagi2.webp" alt="Monitoring CCTV Desa Cemagi" class="w-full h-full object-cover" />
@@ -808,14 +1181,14 @@ document.addEventListener("DOMContentLoaded", () => {
       <!-- IMAGE LEFT -->
       <div class="order-2 md:order-1 flex flex-col gap-4">
         <div class="h-[340px] border border-slate-200 shadow-xl overflow-hidden">
-          <img src="./top-current-clients/desa-Pererenan/Perenan-Bali.jpg" alt="Gerbang desa Pererenan" class="w-full h-full object-cover" />
+          <img src="./top-current-clients/desa-Pererenan/pererenan-kantordesa.png" alt="Gerbang desa Pererenan" class="w-full h-full object-cover" />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="h-[180px] border border-slate-200 shadow-md overflow-hidden">
-            <img src="./top-current-clients/desa-Pererenan/pererenan-kantordesa.png" alt="Kantor Desa Pererenan" class="w-full h-full object-cover" />
+            <img src="./top-current-clients/desa-Pererenan/mentari-fbc-JQ5YMIOipuI-unsplash-1024x575.jpg" alt="Kantor Desa Pererenan" class="w-full h-full object-cover" />
           </div>
           <div class="h-[180px] border border-slate-200 shadow-md overflow-hidden">
-            <img src="./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg" alt="Kasi Pemerintahan Desa Pererenan" class="w-full h-full object-cover" />
+            <img src="./top-current-clients/desa-Pererenan/Perenan-Bali.jpg" alt="Kasi Pemerintahan Desa Pererenan" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
@@ -923,14 +1296,14 @@ document.addEventListener("DOMContentLoaded", () => {
       <!-- IMAGE LEFT -->
       <div class="order-2 md:order-1 flex flex-col gap-4">
         <div class="h-[320px] border border-slate-200 shadow-xl overflow-hidden">
-          <img src="./top-current-clients/arkac/Arkac3logo-onbuildingreal.jpeg" alt="Identitas Arkac" class="w-full h-full object-cover" />
+          <img src="./top-current-clients/arkac/arcakbali.jpg" alt="Identitas Arkac" class="w-full h-full object-cover" />
         </div>
         <div class="flex gap-4">
           <div class="flex-1 h-[180px] border border-slate-200 shadow-lg overflow-hidden">
             <img src="./top-current-clients/arkac/Arkac2front.jpeg" alt="Fasad Arkac" class="w-full h-full object-cover" />
           </div>
           <div class="flex-1 h-[180px] border border-slate-200 shadow-lg overflow-hidden">
-            <img src="./top-current-clients/arkac/Arkac1pakTaufan.jpeg" alt="Manager Arkac" class="w-full h-full object-cover" />
+            <img src="./top-current-clients/arkac/Arkac3logo-onbuildingreal.jpeg" alt="Manager Arkac" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
@@ -1274,18 +1647,8 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 
   <div class="mt-6 branch-map-full">
-    <div class="bg-white/5 shadow-2xl relative overflow-hidden" style="border-radius:0;">
+    <div class="branch-map-panel">
       <div id="branchMap" class="branch-map-canvas"></div>
-      <div class="absolute bottom-4 left-4 flex flex-wrap gap-3 text-xs text-white/70">
-        <span class="flex items-center gap-1 rounded-full border border-white/30 px-3 py-1">
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10V3l8-3 8 3v7h-1V4.26L12 1.4 5 4.26V10H4zm2 2h12v10H6V12zm2 2v6h2v-4h2v4h2v-6H8z"/></svg>
-          Head Office
-        </span>
-        <span class="flex items-center gap-1 rounded-full border border-white/30 px-3 py-1">
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h8v2H4z"/></svg>
-          Cabang field
-        </span>
-      </div>
     </div>
   </div>
 
