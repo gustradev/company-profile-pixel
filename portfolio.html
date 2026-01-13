@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pixel Solusindo • Portfolio</title>
+  <meta name="description" content="Portfolio resmi Pixel Solusindo – implementasi CCTV, jaringan, dan sistem operasional terstandar untuk pemerintahan, hospitality, dan komersial di Bali." />
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -11,16 +12,14 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
-    @page { size: A4; margin: 14mm; }
-
-    @media print {
-      body { background:#fff !important; }
-      .no-print { display:none !important; }
-      .print-break { break-before: page; page-break-before: always; }
-      .print-avoid { break-inside: avoid; page-break-inside: avoid; }
-      .shadow, .shadow-sm { box-shadow:none !important; }
-      a { text-decoration:none !important; color:inherit !important; }
-    }
+  @media print {
+    body { background:#fff !important; }
+    .no-print { display:none !important; }
+    .print-break { break-before: page; page-break-before: always; }
+    .print-avoid { break-inside: avoid; page-break-inside: avoid; }
+    .shadow, .shadow-sm { box-shadow:none !important; }
+    a { text-decoration:none !important; color:inherit !important; }
+  }
 
     @media screen {
       .bg-grid {
@@ -40,7 +39,7 @@
 
 .page-landscape {
   width: 100%;
-  height: calc(210mm - 28mm); /* A4 height - margins */
+  height: calc(297mm - 28mm); /* A4 landscape height */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -55,15 +54,190 @@
 /* ===============================
    LEAFLET MAP FIX (WAJIB)
    =============================== */
+.map-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  min-height: 460px;
+  box-shadow: 0 40px 80px rgba(15,23,42,.35);
+  margin-top: 1.25rem;
+}
+
+#map-wrapper .leaflet-container,
+#branchMap,
+.branch-map-canvas {
+  pointer-events: none;
+  touch-action: none;
+}
+
 #baliMap {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
 }
 
-.map-wrap {
+.map-frame.mobile-full-width {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+}
+
+@media (max-width: 768px) {
+  .map-frame {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+  }
+}
+
+  .map-overlay {
+    position: absolute;
+    bottom: 1rem;
+  left: 1.25rem;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(226,232,240,.8);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  box-shadow: 0 10px 25px rgba(15,23,42,.12);
+  z-index: 10;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.marquee-wrapper {
   position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(226,232,240,.7);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 20px 45px rgba(15,23,42,.08);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  min-width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-card {
+  flex: 0 0 auto;
+  min-width: 260px;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(226,232,240,.8);
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(15,23,42,.08);
+}
+
+.marquee-card img {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+
+.branch-label-card {
+  background: rgba(15, 23, 42, 0.95);
+  color: #f8fafc;
+  border-radius: 999px;
+  padding: 0.35rem 1.1rem;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
+}
+
+.branch-label-card.store {
+  background: rgba(37, 99, 235, 0.92);
+  border-color: rgba(224, 231, 255, 0.5);
+}
+
+.branch-label-card.office {
+  background: rgba(249, 115, 22, 0.95);
+  border-color: rgba(255, 241, 209, 0.6);
+}
+
+.branch-label-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.branch-label-card.office .branch-label-icon {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.branch-label-card.store .branch-label-icon {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.map-embed {
   width: 100%;
-  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
+  margin-top: 1.25rem;
+}
+
+.map-embed iframe {
+  width: 100%;
+  height: 340px;
+  border: none;
+  display: block;
+}
+
+.contact-map {
+  margin-top: 2rem;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,.12);
+  box-shadow: 0 35px 50px rgba(15,23,42,.25);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@media print {
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+.branch-map-full {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.branch-map-canvas {
+  width: 100vw;
+  min-height: 440px;
 }
 
   </style>
@@ -138,7 +312,7 @@
         <!-- CCTV -->
         <div class="space-y-3">
           <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
               <rect x="6" y="18" width="28" height="14" rx="4" stroke="currentColor" stroke-width="2"/>
               <circle cx="26" cy="25" r="4" stroke="currentColor" stroke-width="2"/>
               <path d="M34 20l8-8" stroke="currentColor" stroke-width="2"/>
@@ -151,7 +325,7 @@
         <!-- NETWORK -->
         <div class="space-y-3">
           <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
               <rect x="6" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
               <rect x="30" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
               <rect x="18" y="28" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
@@ -165,7 +339,7 @@
         <!-- MRO -->
         <div class="space-y-3">
           <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
               <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/>
               <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="currentColor" stroke-width="2"/>
             </svg>
@@ -177,7 +351,7 @@
         <!-- PROCUREMENT -->
         <div class="space-y-3">
           <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
+            <svg aria-hidden="true" viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
               <rect x="10" y="16" width="28" height="18" rx="4" stroke="currentColor" stroke-width="2"/>
               <path d="M18 16v-4h12v4" stroke="currentColor" stroke-width="2"/>
             </svg>
@@ -218,23 +392,22 @@
     </div>
 
     <!-- MAP FULL WIDTH -->
-    <div class="relative flex-1 mx-0">
-
-      <!-- MAP -->
-      <div id="baliMap" class="absolute inset-0"></div>
-
-      <!-- OPTIONAL OVERLAY LABEL (EDITORIAL TOUCH) -->
-      <div class="absolute bottom-8 left-14 bg-white/90 backdrop-blur border border-slate-200 px-5 py-3">
-        <div class="text-xs uppercase tracking-widest text-slate-500">
-          Coverage Area
-        </div>
-        <div class="text-sm font-semibold text-slate-800">
-          Bali • Key Project Locations
+    <div class="relative flex-1 mx-0 min-h-[460px] md:min-h-[620px]">
+      <div class="map-frame">
+        <div id="baliMap"></div>
+        <div class="map-overlay">
+          <div class="text-xs uppercase tracking-widest text-slate-500">
+            Coverage Area
+          </div>
+          <div class="text-sm font-semibold text-slate-900">
+            Bali • Key Project Locations
+          </div>
         </div>
       </div>
-
     </div>
 
+    <!-- SOFT GAP / DIVIDER -->
+    <!-- CLIENT HIGHLIGHTS BELOW MAP -->
   </div>
 </section>
 
@@ -245,31 +418,142 @@
    ========================================================= */
 const map = L.map('baliMap', {
   zoomControl: false,
-  attributionControl: false
+  attributionControl: false,
+  dragging: false,
+  scrollWheelZoom: false,
+  doubleClickZoom: false,
+  boxZoom: false,
+  keyboard: false,
+  tap: false,
+  touchZoom: false
 });
+
+const fallbackProjects = [
+  {
+    "id": "desa-cemagi",
+    "name": "Desa Cemagi — Sistem CCTV Publik",
+    "area": "Badung",
+    "point": [-8.6496, 115.1445],
+    "card": [-8.70, 114.45],
+    "photo": "./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg",
+    "cardAnchor": [90, 0]
+  },
+  {
+    "id": "desa-pererenan",
+    "name": "Desa Pererenan — Desa Digital",
+    "area": "Badung",
+    "point": [-8.7057, 115.1661],
+    "card": [-8.10, 114.40],
+    "photo": "./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg",
+    "cardAnchor": [90, 0]
+  },
+  {
+    "id": "de-lhoka",
+    "name": "de Lhoka Ubud — Resort Network",
+    "area": "Ubud",
+    "point": [-8.5061, 115.2628],
+    "card": [-8.40, 115.25],
+    "photo": "./top-current-clients/deLhokaUbud/de-lhoka-136.jpg",
+    "cardAnchor": [45, 0]
+  },
+  {
+    "id": "arkac",
+    "name": "Arkac — Commercial Campus",
+    "area": "Denpasar",
+    "point": [-8.6669, 115.2162],
+    "card": [-7.90, 116.15],
+    "photo": "./top-current-clients/arkac/Arkac2front.jpeg",
+    "cardAnchor": [90, 0]
+  }
+];
+
+const fallbackBranchLocations = [
+  {
+    name: "Pixel Solusindo Head Office",
+    coords: [-8.608127805538013, 115.16082002286291],
+    type: "office",
+    label: "Head office",
+    labelAnchor: [-78, -40],
+    infoText: "Head Office",
+    markerAnchor: [31, 62],
+    floatingIcon: "building"
+  },
+  {
+    name: "Pixel Solusindo Cabang Lukluk",
+    coords: [-8.581704000019169, 115.19067682636204],
+    type: "store",
+    label: "Cabang Lukluk",
+    labelAnchor: [72, -40],
+    infoText: "Cabang Lukluk",
+    markerAnchor: [20, 40],
+    floatingIcon: "store"
+  },
+  {
+    name: "Pixel Solusindo Cabang Bangli",
+    coords: [-8.349157071422475, 115.35026819236644],
+    type: "store",
+    label: "Cabang Bangli",
+    labelAnchor: [72, -40],
+    infoText: "Cabang Bangli",
+    markerAnchor: [20, 40],
+    floatingIcon: "store"
+  }
+];
+
+const safeLoadJson = (path, fallback) =>
+  fetch(path)
+    .then(res => {
+      if (!res.ok) throw new Error(`Failed to load ${path}`);
+      return res.text();
+    })
+    .then(text => {
+      if (!text) return fallback;
+      try {
+        return JSON.parse(text);
+      } catch {
+        return fallback;
+      }
+    })
+    .catch(() => fallback);
 
 L.tileLayer(
   'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
   { maxZoom: 18 }
 ).addTo(map);
 
-// FIT BALI
-map.fitBounds(
-  [
-    [-8.95, 114.40],
-    [-8.00, 115.80]
-  ],
-  { padding: [50, 50] }
-);
+setTimeout(() => {
+  map.invalidateSize();
+  fitBaliView();
+}, 500);
+
+// FIT BALI (responsive)
+const baliBounds = [
+  [-8.95, 114.40],
+  [-8.00, 115.80]
+];
+
+const fitBaliView = () => {
+  const padding = window.innerWidth < 768 ? [140, 140] : [50, 50];
+  map.invalidateSize();
+  map.fitBounds(baliBounds, {
+    padding,
+    animate: false
+  });
+};
+
+fitBaliView();
+setTimeout(fitBaliView, 300);
+setTimeout(() => {
+  map.invalidateSize();
+  fitBaliView();
+}, 500);
+window.addEventListener("resize", () => setTimeout(fitBaliView, 150));
 
 /* =========================================================
    LOAD PROJECT DATA FROM JSON
    ========================================================= */
-fetch('./projects-map.json')
-  .then(res => res.json())
-  .then(projects => {
-    drawProjects(projects);
-  });
+safeLoadJson('./projects-map.json', fallbackProjects)
+  .then(projects => drawProjects(projects));
 
 /* =========================================================
    DRAW PROJECTS
@@ -294,6 +578,7 @@ function drawProjects(projects) {
     }).addTo(map);
 
     // INFO CARD
+    const infoAnchor = p.cardAnchor || [90, 0];
     L.marker(p.card, {
       icon: L.divIcon({
         className: "",
@@ -314,7 +599,7 @@ function drawProjects(projects) {
             </div>
           </div>
         `,
-        iconAnchor: [90, 0]
+        iconAnchor: infoAnchor
       })
     }).addTo(map);
 
@@ -322,6 +607,116 @@ function drawProjects(projects) {
 
   setTimeout(() => map.invalidateSize(), 300);
 }
+
+function buildBranchIcon(branch) {
+  const size = branch.type === "office" ? 62 : 40;
+  const halo = branch.type === "office" ? "#f97316" : "#22c55e";
+  return L.divIcon({
+    className: "",
+    html: `
+      <div style="
+        width:${size}px;
+        height:${size}px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:transparent;
+        box-shadow:none;
+      ">
+        <svg viewBox="0 0 24 24" class="h-7 w-7">
+          <path d="M12 2C8.1 2 5 5.1 5 9c0 5.5 6.5 12.5 6.5 12.5S18 14.5 18 9c0-3.9-3.1-7-6-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="${halo}"/>
+        </svg>
+      </div>
+    `,
+    iconSize: [size, size],
+    iconAnchor: branch.markerAnchor || [size / 2, size],
+    popupAnchor: branch.popupAnchor || [0, -size - 10]
+  });
+}
+
+function buildFloatingLabel(branch) {
+  const iconPath = branch.floatingIcon === "building"
+    ? "M4 22V5h16v17H4zm2-2h12V7H6zm2-4h4v4H8zm6 0h2v4h-2zm-6-6h4v2H8zm6 0h2v2h-2z"
+    : "M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h8v2H4";
+  return L.divIcon({
+    className: `branch-label-card ${branch.type}`,
+    html: `
+      <span class="branch-label-icon">
+        <svg viewBox="0 0 24 24" fill="white" class="h-3 w-3">
+          <path d="${iconPath}"/>
+        </svg>
+      </span>
+      <span>${branch.infoText}</span>
+    `,
+    iconSize: [170, 40],
+    iconAnchor: [0, 0]
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const branchMapElement = document.querySelector("#branchMap");
+  if (!branchMapElement) return;
+  const branchMap = L.map("branchMap", {
+    zoomControl: false,
+    attributionControl: false,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    tap: false,
+    touchZoom: false
+  });
+
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+    { maxZoom: 18 }
+  ).addTo(branchMap);
+
+  const bounds = L.latLngBounds([]);
+  const refreshView = () => {
+    branchMap.invalidateSize();
+    if (bounds.isValid()) {
+      branchMap.fitBounds(bounds, { padding: [60, 60] });
+    }
+  };
+
+  safeLoadJson("./branch-locations.json", fallbackBranchLocations)
+    .then(branches => {
+      branches.forEach(branch => {
+        bounds.extend(branch.coords);
+    L.marker(branch.coords, {
+      icon: buildBranchIcon(branch)
+    })
+          .bindPopup(`
+            <div style="font-size:14px;font-weight:600;">${branch.name}</div>
+            <div style="font-size:12px;color:#475569;">${branch.label}</div>
+          `)
+          .addTo(branchMap);
+
+        const labelAnchor = branch.labelAnchor || branch.infoAnchor || [0, 0];
+        const originPoint = branchMap.latLngToLayerPoint(branch.coords);
+        const labelPoint = branchMap.layerPointToLatLng(
+          originPoint.add(L.point(labelAnchor[0], labelAnchor[1]))
+        );
+        L.polyline(
+          [branch.coords, labelPoint],
+          { color: "#94a3b8", weight: 1, dashArray: "4 3", opacity: 0.7 }
+        ).addTo(branchMap);
+
+        L.marker(branch.coords, {
+          icon: buildFloatingLabel(branch),
+          interactive: false
+        })
+          .setLatLng(labelPoint) 
+          .addTo(branchMap);
+      });
+
+      refreshView();
+      setTimeout(refreshView, 300);
+    })
+    .catch(() => refreshView());
+});
 </script>
 
 
@@ -331,13 +726,14 @@ function drawProjects(projects) {
 <!-- ================= PAGE 3 : PROJECT LIBRARY ================= -->
 <!-- ================= PAGE 3 : PROJECT LIBRARY (FULL WIDTH • CLIENT BASED) ================= -->
 
+
 <!-- ===== CLIENT 1 : DESA CEMAGI ===== -->
 <section class="print-break relative overflow-hidden">
 
   <!-- BACKGROUND IMAGE (CLIENT THEME) -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=70')">
+    style="background-image:url('./top-current-clients/desaCemagi/cemagi3.png')">
   </div>
 
   <!-- OVERLAY -->
@@ -345,50 +741,61 @@ function drawProjects(projects) {
 
   <!-- CONTENT -->
   <div class="relative px-14 py-24 max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-16 items-center">
+    <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-16 items-start">
 
       <!-- TEXT LEFT -->
       <div>
         <div class="text-xs uppercase tracking-widest text-slate-500">
-          Government / Public Sector
+          Government / Desa Digitalisasi
         </div>
         <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
           Desa Cemagi — Badung, Bali
         </h3>
 
         <p class="mt-6 text-lg leading-relaxed text-slate-700">
-          Implementasi sistem CCTV terstandar untuk area publik dan fasilitas desa,
-          dengan pendekatan perencanaan titik kamera,
-          pengujian sistem, dokumentasi teknis,
-          serta skema pemeliharaan berkelanjutan.
+          Implementasi sistem CCTV berstandar untuk desa wisata dengan 70 kamera yang
+          tersebar di kantor desa dan titik rawan publik, lengkap dengan monitoring real-time
+          dan dokumentasi teknis untuk mendukung pengelolaan keamanan serta pelayanan kepada wisatawan.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— CCTV Indoor & Outdoor</li>
-          <li>— Area Publik & Fasilitas Desa</li>
-          <li>— Preventive Maintenance</li>
+          <li>— 70 kamera CCTV indoor &amp; outdoor untuk kantor, jalan utama, dan fasilitas umum.</li>
+          <li>— Monitoring real-time membantu pengawasan keamanan desa dan pelaporan keramaian.</li>
+          <li>— Preventive maintenance rutin serta dokumentasi untuk tim IT desa.</li>
         </ul>
       </div>
 
       <!-- IMAGE RIGHT -->
-      <div class="grid grid-cols-2 gap-4">
-        <img src="https://placehold.co/600x420" class="w-full object-cover" />
-        <img src="https://placehold.co/600x420" class="w-full object-cover" />
-        <img src="https://placehold.co/1200x420" class="w-full object-cover col-span-2" />
+      <div class="relative flex flex-col gap-4">
+        <div class="h-[320px] border border-slate-200 shadow-lg overflow-hidden">
+          <img src="./top-current-clients/desaCemagi/cemagi3.png" alt="Tim IT Desa Cemagi" class="w-full h-full object-cover" />
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="h-[160px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/desaCemagi/cemagi.png" alt="Desa Cemagi field" class="w-full h-full object-cover" />
+          </div>
+          <div class="h-[160px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/desaCemagi/cemagi2.webp" alt="Monitoring CCTV Desa Cemagi" class="w-full h-full object-cover" />
+          </div>
+          <div class="h-[160px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/desaCemagi/kantor-desa-cemagi.jpeg" alt="Kolaborasi Pixel dengan Desa Cemagi" class="w-full h-full object-cover" />
+          </div>
+        </div>
       </div>
 
     </div>
+
   </div>
 </section>
 
 
-<!-- ===== CLIENT 2 : DE LOCA VILLA ===== -->
+<!-- ===== CLIENT 2 : DESA PERERENAN ===== -->
 <section class="print-break relative overflow-hidden">
 
   <!-- BACKGROUND IMAGE (CLIENT THEME) -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=2400&q=70')">
+    style="background-image:url('./top-current-clients/desa-Pererenan/Perenan-Bali.jpg')">
   </div>
 
   <!-- OVERLAY -->
@@ -396,36 +803,41 @@ function drawProjects(projects) {
 
   <!-- CONTENT -->
   <div class="relative px-14 py-24 max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-16 items-center">
+    <div class="grid md:grid-cols-[0.9fr_1.1fr] gap-16 items-start">
 
       <!-- IMAGE LEFT -->
-      <div class="order-2 md:order-1 grid grid-cols-2 gap-4">
-        <img src="https://placehold.co/600x420" class="w-full object-cover" />
-        <img src="https://placehold.co/600x420" class="w-full object-cover" />
-        <img src="https://placehold.co/1200x420" class="w-full object-cover col-span-2" />
+      <div class="order-2 md:order-1 flex flex-col gap-4">
+        <div class="h-[340px] border border-slate-200 shadow-xl overflow-hidden">
+          <img src="./top-current-clients/desa-Pererenan/Perenan-Bali.jpg" alt="Gerbang desa Pererenan" class="w-full h-full object-cover" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="h-[180px] border border-slate-200 shadow-md overflow-hidden">
+            <img src="./top-current-clients/desa-Pererenan/pererenan-kantordesa.png" alt="Kantor Desa Pererenan" class="w-full h-full object-cover" />
+          </div>
+          <div class="h-[180px] border border-slate-200 shadow-md overflow-hidden">
+            <img src="./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg" alt="Kasi Pemerintahan Desa Pererenan" class="w-full h-full object-cover" />
+          </div>
+        </div>
       </div>
 
       <!-- TEXT RIGHT -->
       <div class="order-1 md:order-2">
         <div class="text-xs uppercase tracking-widest text-slate-500">
-          Hospitality / Private Property
+          Government / Public Safety
         </div>
         <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
-          De Loca Villa — Badung
+          Desa Pererenan — Badung, Bali
         </h3>
 
         <p class="mt-6 text-lg leading-relaxed text-slate-700">
-          Pembangunan sistem keamanan dan infrastruktur jaringan
-          untuk properti hospitality,
-          dengan fokus pada kestabilan operasional,
-          keamanan area privat,
-          serta kemudahan pengelolaan jangka panjang.
+          Digitalisasi CCTV yang dimulai sejak 2021 memastikan tiap titik masuk desa dapat dipantau,
+          membantu aspirasi masyarakat, dan memperkuat kolaborasi dengan aparat kepolisian dalam menjaga kondusivitas wilayah.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— CCTV & Access Monitoring</li>
-          <li>— Network Infrastructure</li>
-          <li>— Ongoing Technical Support</li>
+          <li>— Coverage CCTV pada jalur keluar-masuk serta titik rawan akses desa.</li>
+          <li>— Pantauan 24/7 memudahkan tim keamanan desa dan instansi kepolisian.</li>
+          <li>— Pelayanan yang merespon aspirasi warga dan mempercepat digitalisasi layanan publik.</li>
         </ul>
       </div>
 
@@ -434,13 +846,13 @@ function drawProjects(projects) {
 </section>
 
 
-<!-- ===== CLIENT 3 : COMMERCIAL / OFFICE ===== -->
+<!-- ===== CLIENT 3 : DE LHOCA UBUD ===== -->
 <section class="print-break relative overflow-hidden">
 
   <!-- BACKGROUND IMAGE (CLIENT THEME) -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=70')">
+    style="background-image:url('./top-current-clients/deLhokaUbud/de-lhoka-106.jpg')">
   </div>
 
   <!-- OVERLAY -->
@@ -448,37 +860,43 @@ function drawProjects(projects) {
 
   <!-- CONTENT -->
   <div class="relative px-14 py-24 max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-16 items-center">
+    <div class="grid md:grid-cols-[1.1fr_0.9fr] gap-16 items-start">
 
       <!-- TEXT LEFT -->
       <div>
         <div class="text-xs uppercase tracking-widest text-slate-500">
-          Commercial / Office
+          Hospitality / Resort Networks
         </div>
         <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
-          Office & Commercial Area — Bali
+          de Lhoka Ubud — Ubud, Bali
         </h3>
 
         <p class="mt-6 text-lg leading-relaxed text-slate-700">
-          Implementasi sistem monitoring dan infrastruktur jaringan
-          untuk lingkungan perkantoran dan area komersial,
-          dengan pendekatan struktur rapi,
-          dokumentasi teknis,
-          dan kesiapan untuk pengembangan ke depan.
+          Pembaruan jaringan, instalasi Access Point, dan pencabutan kabel lama memastikan
+          pengalaman tamu serta tim operasional dapat mengandalkan konektivitas stabil di seluruh properti de Lhoka Ubud.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— Structured Network Cabling</li>
-          <li>— CCTV & Monitoring System</li>
-          <li>— Maintenance & Optimization</li>
+          <li>— 70 titik jaringan yang direfresh plus 6 titik tambahan untuk Access Point baru.</li>
+          <li>— Kestabilan Wi-Fi di area publik, lobi, dan meeting space dengan koordinasi terjadwal.</li>
+          <li>— Komunikasi intensif serta tanggapan cepat atas kendala lapangan.</li>
         </ul>
       </div>
 
       <!-- IMAGE RIGHT -->
-      <div class="grid grid-cols-2 gap-4">
-        <img src="https://placehold.co/600x420" class="w-full object-cover" />
-        <img src="https://placehold.co/600x420" class="w-full object-cover" />
-        <img src="https://placehold.co/1200x420" class="w-full object-cover col-span-2" />
+      <div class="space-y-4">
+        <div class="h-[320px] border border-slate-200 shadow-xl overflow-hidden">
+          <img src="./top-current-clients/deLhokaUbud/DJI_0757.JPG" alt="Area eksternal properti" class="w-full h-full object-cover" />
+          
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-1 h-[180px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/deLhokaUbud/230619_PiB_KSK02202.jpg" alt="Meeting Hall de Lhoka" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1 h-[180px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/deLhokaUbud/de-lhoka-136.jpg" alt="Jaringan de Lhoka Ubud" class="w-full h-full object-cover" />
+          </div>
+        </div>
       </div>
 
     </div>
@@ -486,9 +904,65 @@ function drawProjects(projects) {
 </section>
 
 
+<!-- ===== CLIENT 4 : ARKAC ===== -->
+<section class="print-break relative overflow-hidden">
+
+  <!-- BACKGROUND IMAGE (CLIENT THEME) -->
+  <div
+    class="absolute inset-0 bg-cover bg-center"
+    style="background-image:url('./top-current-clients/arkac/Arkac3logo-onbuildingreal.jpeg')">
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="absolute inset-0 bg-white/70"></div>
+
+  <!-- CONTENT -->
+  <div class="relative px-14 py-24 max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-[0.9fr_1.1fr] gap-16 items-start">
+
+      <!-- IMAGE LEFT -->
+      <div class="order-2 md:order-1 flex flex-col gap-4">
+        <div class="h-[320px] border border-slate-200 shadow-xl overflow-hidden">
+          <img src="./top-current-clients/arkac/Arkac3logo-onbuildingreal.jpeg" alt="Identitas Arkac" class="w-full h-full object-cover" />
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-1 h-[180px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/arkac/Arkac2front.jpeg" alt="Fasad Arkac" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1 h-[180px] border border-slate-200 shadow-lg overflow-hidden">
+            <img src="./top-current-clients/arkac/Arkac1pakTaufan.jpeg" alt="Manager Arkac" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXT RIGHT -->
+      <div class="order-1 md:order-2">
+        <div class="text-xs uppercase tracking-widest text-slate-500">
+          Commercial / Mixed-use
+        </div>
+        <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
+          Arkac — Denpasar, Bali
+        </h3>
+
+        <p class="mt-6 text-lg leading-relaxed text-slate-700">
+          Penguatan sistem keamanan dengan instalasi 16 kamera CCTV pada area bisnis dan pusat layanan
+          memastikan respons cepat terhadap laporan dan menjaga kenyamanan pengunjung.
+        </p>
+
+        <ul class="mt-6 space-y-2 text-sm text-slate-700">
+          <li>— 16 kamera indoor &amp; outdoor yang menutupi akses utama hingga area parkir.</li>
+          <li>— Monitoring 24/7 serta dokumentasi rekaman untuk analisis pola kunjungan.</li>
+          <li>— Tim respons cepat Pixel Solusindo serta rencana lanjutan untuk kelanjutan proyek.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ================= PAGE 4 : REVIEW ================= -->
 <!-- ================= PAGE 4 : CLIENT REVIEW (FULL WIDTH • BENCHMARK STYLE) ================= -->
+
 
 <!-- ===== REVIEW 1 : DESA CEMAGI ===== -->
 <section class="print-break relative overflow-hidden">
@@ -496,7 +970,7 @@ function drawProjects(projects) {
   <!-- BACKGROUND IMAGE -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=70')">
+    style="background-image:url('./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg')">
   </div>
 
   <!-- OVERLAY -->
@@ -517,22 +991,20 @@ function drawProjects(projects) {
         </h3>
 
         <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
-          “Pekerjaan dilakukan dengan rapi dan terstruktur.
-          Sistem berjalan stabil sejak awal operasional,
-          dengan dokumentasi teknis yang jelas dan mudah dipahami.”
+          “Secara keseluruhan pelayanan sudah sangat baik terutama dalam hal merespon permintaan terkait CCTV, sehingga kendala cepat teratasi dan sistem selalu siap dipantau.”
         </blockquote>
 
         <div class="mt-6 text-sm text-slate-600">
-          PIC Pengelola Sistem Keamanan Desa
+          I Putu Andy Wijaya — Staff IT Desa Cemagi
         </div>
       </div>
 
       <!-- RIGHT : PERSON / CONTEXT VISUAL -->
       <div class="flex justify-center md:justify-end">
-        <div class="w-48 h-48 rounded-full overflow-hidden border border-slate-200">
+        <div class="w-48 h-48 overflow-hidden border border-slate-200">
           <img
-            src="https://placehold.co/400x400"
-            alt="Client Representative"
+            src="./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg"
+            alt="Staff IT Desa Cemagi"
             class="w-full h-full object-cover"
           />
         </div>
@@ -543,13 +1015,13 @@ function drawProjects(projects) {
 </section>
 
 
-<!-- ===== REVIEW 2 : DE LOCA VILLA ===== -->
+<!-- ===== REVIEW 2 : DESA PERERENAN ===== -->
 <section class="print-break relative overflow-hidden">
 
   <!-- BACKGROUND IMAGE -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=2400&q=70')">
+    style="background-image:url('./top-current-clients/desa-Pererenan/pererenan-kantordesa.png')">
   </div>
 
   <!-- OVERLAY -->
@@ -561,10 +1033,10 @@ function drawProjects(projects) {
 
       <!-- LEFT : PERSON -->
       <div class="order-2 md:order-1 flex justify-center md:justify-start">
-        <div class="w-48 h-48 rounded-full overflow-hidden border border-slate-200">
+        <div class="w-48 h-48 overflow-hidden border border-slate-200">
           <img
-            src="https://placehold.co/400x400"
-            alt="Client Representative"
+            src="./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg"
+            alt="Kasi Pemerintahan Desa Pererenan"
             class="w-full h-full object-cover"
           />
         </div>
@@ -573,21 +1045,19 @@ function drawProjects(projects) {
       <!-- RIGHT : REVIEW TEXT -->
       <div class="order-1 md:order-2">
         <div class="text-xs uppercase tracking-widest text-slate-500">
-          Client Review — Hospitality
+          Client Review — Public Safety
         </div>
 
         <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
-          De Loca Villa
+          Desa Pererenan, Badung
         </h3>
 
         <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
-          “Tim responsif dan memahami kebutuhan operasional kami.
-          Sistem mudah dipantau,
-          serta perawatan berjalan tanpa mengganggu aktivitas properti.”
+          “CCTV desa berangkat dari aspirasi masyarakat; sekarang jalur masuk desa yang selama ini sulit diawasi dapat dipantau secara menyeluruh hingga membantu aparat kepolisian menjaga kondusivitas.”
         </blockquote>
 
         <div class="mt-6 text-sm text-slate-600">
-          Operations Manager
+          Ibu Putu Pererenan — Kasi Pemerintahan Desa Pererenan
         </div>
       </div>
 
@@ -596,13 +1066,114 @@ function drawProjects(projects) {
 </section>
 
 
+<!-- ===== REVIEW 3 : DE LHOCA UBUD ===== -->
+<section class="print-break relative overflow-hidden">
+
+  <!-- BACKGROUND IMAGE -->
+  <div
+    class="absolute inset-0 bg-cover bg-center"
+    style="background-image:url('./top-current-clients/deLhokaUbud/de-lhoka-142.jpg')">
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="absolute inset-0 bg-white/75"></div>
+
+  <!-- CONTENT -->
+  <div class="relative px-14 py-28 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+
+      <!-- TEXT LEFT -->
+      <div>
+        <div class="text-xs uppercase tracking-widest text-slate-500">
+          Client Review — Hospitality
+        </div>
+
+        <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
+          de Lhoka Ubud
+        </h3>
+
+        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
+          “Kami sangat puas karena pengerjaan tepat waktu sesuai timetable, komunikasi berjalan baik, dan tim cepat tanggap setiap ada kendala sehingga hasilnya sesuai kebutuhan kami.”
+        </blockquote>
+
+        <div class="mt-6 text-sm text-slate-600">
+          Bapak Arimbawa — IT Manager de Lhoka Ubud
+        </div>
+      </div>
+
+      <!-- RIGHT : PERSON / CONTEXT VISUAL -->
+      <div class="flex justify-center md:justify-end">
+        <div class="w-48 h-48 overflow-hidden border border-slate-200">
+          <img
+            src="./top-current-clients/deLhokaUbud/it-manager-delhokaubud.jpeg"
+            alt="IT Manager de Lhoka Ubud"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== REVIEW 4 : ARKAC ===== -->
+<section class="print-break relative overflow-hidden">
+
+  <!-- BACKGROUND IMAGE -->
+  <div
+    class="absolute inset-0 bg-cover bg-center"
+    style="background-image:url('./top-current-clients/arkac/Arkac2front.jpeg')">
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="absolute inset-0 bg-white/75"></div>
+
+  <!-- CONTENT -->
+  <div class="relative px-14 py-28 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-20 items-center">
+
+      <!-- LEFT : PERSON -->
+      <div class="order-2 md:order-1 flex justify-center md:justify-start">
+        <div class="w-48 h-48 overflow-hidden border border-slate-200">
+          <img
+            src="./top-current-clients/arkac/Arkac1pakTaufan.jpeg"
+            alt="PIC Arkac"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- RIGHT : REVIEW TEXT -->
+      <div class="order-1 md:order-2">
+        <div class="text-xs uppercase tracking-widest text-slate-500">
+          Client Review — Commercial
+        </div>
+
+        <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
+          Arkac, Denpasar
+        </h3>
+
+        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
+          “Overall sangat memuaskan, bintang lima; respon cepat dan koordinasi kerja sangat baik sehingga kami akan merekomendasikan Pixel Solusindo dan menggunakan layanan berikutnya.”
+        </blockquote>
+
+        <div class="mt-6 text-sm text-slate-600">
+          Bapak Taufan — PIC Arkac
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ================= PAGE 5 : TRUST SNAPSHOT (FULL WIDTH • BENCHMARK STYLE) ================= -->
 <section class="print-break relative overflow-hidden">
 
   <!-- BACKGROUND IMAGE -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=2400&q=70')">
+    style="background-image:url('./top-current-clients/desaCemagi/cemagi3.png')">
   </div>
 
   <!-- OVERLAY -->
@@ -670,12 +1241,128 @@ function drawProjects(projects) {
     </div>
 
     <!-- FOOTNOTE -->
-    <div class="mt-20 max-w-2xl text-sm text-white/60 leading-relaxed">
+  <div class="mt-20 max-w-2xl text-sm text-white/60 leading-relaxed">
       Data mencerminkan pengalaman implementasi di sektor pemerintahan,
       hospitality, komersial, dan infrastruktur operasional,
       dengan pendekatan instalasi terstandar dan dokumentasi yang dapat dipertanggungjawabkan.
     </div>
 
+  </div>
+</section>
+
+<!-- ================= PAGE 5.5 : KANTOR KAMI ================= -->
+<section class="print-break relative overflow-hidden">
+
+  <div
+    class="absolute inset-0 bg-cover bg-center"
+    style="background-image:url('https://images.unsplash.com/photo-1500534314209-a26db0f5d74b?auto=format&fit=crop&w=2400&q=70')">
+  </div>
+  <div class="absolute inset-0 bg-slate-900/85"></div>
+
+  <div class="relative px-14 py-24 max-w-6xl mx-auto text-white">
+    <div class="max-w-3xl">
+      <div class="text-xs uppercase tracking-[0.5em] text-white/70">
+        Kantor Kami
+      </div>
+      <h2 class="mt-3 text-4xl font-extrabold tracking-tight">
+        Bangli • Lukluk • Head Office – jaringan Bali yang siap melayani
+      </h2>
+      <p class="mt-4 text-white/80 text-lg leading-relaxed">
+        Peta ini menunjukkan titik koordinat semua kantor yang terhubung dengan tim operasional, masing-masing dengan ikon yang terbaca dan label informasi floating serta kartu detail timbal balik.
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-6 branch-map-full">
+    <div class="bg-white/5 shadow-2xl relative overflow-hidden" style="border-radius:0;">
+      <div id="branchMap" class="branch-map-canvas"></div>
+      <div class="absolute bottom-4 left-4 flex flex-wrap gap-3 text-xs text-white/70">
+        <span class="flex items-center gap-1 rounded-full border border-white/30 px-3 py-1">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10V3l8-3 8 3v7h-1V4.26L12 1.4 5 4.26V10H4zm2 2h12v10H6V12zm2 2v6h2v-4h2v4h2v-6H8z"/></svg>
+          Head Office
+        </span>
+        <span class="flex items-center gap-1 rounded-full border border-white/30 px-3 py-1">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h8v2H4z"/></svg>
+          Cabang field
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative px-14 pb-24 max-w-6xl mx-auto text-white">
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
+      <article class="rounded-3xl border border-white/20 bg-white/95 p-6 text-slate-900 shadow-lg">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10V3l8-3 8 3v7h-1V4.26L12 1.4 5 4.26V10H4zm2 2h12v10H6V12zm2 2v6h2v-4h2v4h2v-6H8z"/></svg>
+          </span>
+          <div>
+            <p class="text-lg font-semibold">Pixel Solusindo Head Office</p>
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Information services</p>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700">
+          <span class="text-orange-500">5.0</span>
+          <span class="text-slate-500">(3 ulasan)</span>
+        </div>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          Jl. Kopral I Nym Suwena, Buduk, Mengwi, Badung, Bali 80351<br>
+          +62 811-3961-8857 · Open · Closes 4.30 pm · Code 95Q6+X5
+        </p>
+        <a href="https://share.google/Rb1J0QatYZUCNh3DI" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900" target="_blank" rel="noreferrer">
+          View on Google Maps
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 7-1.41 1.41L13 6.83V20h-2V6.83l-4.59 4.58L5 10z"/></svg>
+        </a>
+      </article>
+
+      <article class="rounded-3xl border border-white/20 bg-white/95 p-6 text-slate-900 shadow-lg">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h8v2H4z"/></svg>
+          </span>
+          <div>
+            <p class="text-lg font-semibold">Pixel Solusindo Cabang Lukluk</p>
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Security system supplier</p>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700">
+          <span class="text-orange-500">4.6</span>
+          <span class="text-slate-500">(9 ulasan)</span>
+        </div>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          C58R+W63, Jl. Raya Perang, Lukluk, Mengwi, Kabupaten Badung, Bali 80351<br>
+          +62 811-3961-8857 · Open · Closes 4.30 pm
+        </p>
+        <a href="https://share.google/9sk8fGC8WfEKt9hhl" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900" target="_blank" rel="noreferrer">
+          View on Google Maps
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 7-1.41 1.41L13 6.83V20h-2V6.83l-4.59 4.58L5 10z"/></svg>
+        </a>
+      </article>
+
+      <article class="rounded-3xl border border-white/20 bg-white/95 p-6 text-slate-900 shadow-lg">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h16v2H4zm0 4h16v11H4z"/></svg>
+          </span>
+          <div>
+            <p class="text-lg font-semibold">Pixel Solusindo Cabang Bangli</p>
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Computer store</p>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700">
+          <span class="text-orange-500">5.0</span>
+          <span class="text-slate-500">(77 ulasan)</span>
+        </div>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          Jl. Raya Kayuambua, Tiga, Kec. Susut, Kabupaten Bangli, Bali 80661<br>
+          +62 812-2682-4787 · Open · Closes 5.00 pm
+        </p>
+        <a href="https://share.google/p9qt0jlf46Jpq0xca" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900" target="_blank" rel="noreferrer">
+          View on Google Maps
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 7-1.41 1.41L13 6.83V20h-2V6.83l-4.59 4.58L5 10z"/></svg>
+        </a>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -721,7 +1408,7 @@ function drawProjects(projects) {
             Email
           </div>
           <div class="mt-1 font-semibold">
-            ciptakreasitama.ind@gmail.com
+            info@pixelsolusindo.com
           </div>
         </div>
 
@@ -731,15 +1418,6 @@ function drawProjects(projects) {
           </div>
           <div class="mt-1 font-semibold">
             +62 811-3961-8857
-          </div>
-        </div>
-
-        <div>
-          <div class="text-xs uppercase tracking-wider text-white/60">
-            Location
-          </div>
-          <div class="mt-1 font-semibold">
-            Bali, Indonesia
           </div>
         </div>
 
@@ -775,9 +1453,9 @@ function drawProjects(projects) {
 
     <div class="max-w-3xl">
 
-      <div class="text-xs uppercase tracking-widest text-slate-500">
-        <a>Atas Perhatiannya Kami Ucapkan</a>
-      </div>
+        <div class="text-xs uppercase tracking-widest text-slate-500">
+          <span>Atas Perhatiannya Kami Ucapkan</span>
+        </div>
 
       <h2 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900">
         Terima Kasih

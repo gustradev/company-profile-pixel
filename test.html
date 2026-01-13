@@ -3,509 +3,735 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Company Profile • CV Cipta Kreasitama (Pixel Solusindo)</title>
+  <title>Compro Pixel • Company Profile • CV Cipta Kreasitama</title>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind (you will build output.css with npm run build:css) -->
+  <link rel="stylesheet" href="./assets/css/output.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
 
   <style>
-    :root{--brand:#0f172a;--accent:#0b5fff}
-    html,body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
-    /* ===============================
-       PRINT — HARD SAFE (A4)
-       =============================== */
-    @page { size: A4 portrait; margin: 14mm; }
-
-    @media print {
-      html, body { background:#fff !important; color:#000; }
-      .no-print { display:none !important; }
-
-      section, article, .print-avoid, pre {
-        break-inside: avoid !important;
-        page-break-inside: avoid !important;
-      }
-
-      .print-break {
-        break-before: page;
-        page-break-before: always;
-      }
-
-      h1,h2,h3 { break-after: avoid; page-break-after: avoid; }
-
-      pre {
-        white-space: pre-wrap !important;
-        word-break: break-word !important;
-      }
-
-      .sticky { position: static !important; }
+    :root{
+      --ink:#0f172a;
+      --muted:#475569;
+      --line: rgba(15,23,42,.10);
+      --softline: rgba(15,23,42,.06);
+      --paper:#ffffff;
+      --mist:#f8fafc;
+      --mist2:#f1f5f9;
+      --brand:#0b3954;      /* Pixel-ish navy */
+      --accent:#f59e0b;     /* Pixel-ish orange */
+      --accent2:#38bdf8;    /* sky */
+      --shadow: 0 18px 40px rgba(15,23,42,.08);
+      --shadow2: 0 10px 24px rgba(15,23,42,.06);
     }
 
-    @media screen {
-      .bg-grid {
-        background-image:
-          linear-gradient(to right, rgba(15,23,42,0.03) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(15,23,42,0.03) 1px, transparent 1px);
-        background-size: 22px 22px;
-      }
+    html,body{
+      height:100%;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-      /* Full-bleed helpers */
-      .full-bleed { width:100vw; margin-left:50%; transform:translateX(-50%); }
-      .container-inner { max-width:1200px; margin:0 auto; padding-left:1rem; padding-right:1rem; }
-      .page-landscape { width:100%; }
+    /* Edge-to-edge sections. Content stays readable using container paddings. */
+    .edge {
+      width: 100%;
+      position: relative;
+    }
+
+    /* Subtle animated background grid (very enterprise, very soft) */
+    .bg-grid::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(to right, rgba(15,23,42,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,23,42,.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(circle at 20% 10%, rgba(0,0,0,.9), transparent 60%);
+      pointer-events:none;
+    }
+
+    /* Soft moving gradient wash */
+    .wash::after{
+      content:"";
+      position:absolute; inset:-80px;
+      background:
+        radial-gradient(600px 300px at 20% 10%, rgba(56,189,248,.18), transparent 70%),
+        radial-gradient(640px 320px at 85% 0%, rgba(245,158,11,.18), transparent 70%),
+        radial-gradient(520px 260px at 70% 90%, rgba(11,57,84,.10), transparent 70%);
+      filter: blur(2px);
+      animation: floatWash 18s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes floatWash{
+      0%,100%{ transform: translate3d(0,0,0); opacity: .9; }
+      50%{ transform: translate3d(0,-10px,0); opacity: 1; }
+    }
+
+    /* Sticky nav glass (white enterprise) */
+    .sticky-nav{
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.84);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--softline);
+    }
+
+    /* Professional sharp cards: minimal radius, no “cupu” look */
+    .panel{
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      border-radius: 8px; /* subtle, not “rounded-cute” */
+    }
+
+    /* Hero media treatment */
+    .hero-media{
+      position:absolute; inset:0;
+      background: #0b1220;
+    }
+    .hero-media img{
+      width:100%; height:100%; object-fit: cover;
+      filter: saturate(.95) contrast(1.02) brightness(.82);
+      transform: scale(1.02);
+    }
+    .hero-overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.90) 0%, rgba(255,255,255,.84) 18%, rgba(255,255,255,.75) 60%, rgba(255,255,255,.92) 100%);
+      mix-blend-mode: screen;
+      pointer-events:none;
+    }
+    .hero-ink{
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.78) 52%, rgba(255,255,255,.50));
+      pointer-events:none;
+    }
+
+    /* Marquee track */
+    .marquee{
+      overflow: hidden;
+      border: 1px solid var(--softline);
+      background: linear-gradient(180deg, var(--mist), #fff);
+    }
+    .marquee-track{
+      display:flex;
+      gap: 18px;
+      align-items: stretch;
+      padding: 18px;
+      width: max-content;
+      animation: marquee 34s linear infinite;
+    }
+    @keyframes marquee{
+      0%{ transform: translateX(0); }
+      100%{ transform: translateX(-50%); }
+    }
+
+    /* Reveal animation */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible{ opacity:1; transform: translateY(0); }
+
+    /* SVG icon container */
+    .ico{
+      width: 18px; height: 18px; flex: 0 0 auto;
+      color: var(--brand);
+    }
+
+    /* Print: Folio/F4 friendly */
+    @page{
+      size: 210mm 330mm; /* Folio/F4 portrait default. User can switch to landscape in print dialog. */
+      margin: 10mm;
+    }
+    @media print{
+      *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      a{ color: inherit; text-decoration: none; }
+      .no-print{ display:none !important; }
+      .print-reset-shadow{ box-shadow:none !important; }
+      .sticky-nav{ position: static; backdrop-filter:none; }
+      .marquee-track{ animation: none !important; transform: none !important; flex-wrap: wrap; width: 100% !important; }
+      .wash::after, .bg-grid::before{ display:none !important; }
+      .reveal{ opacity:1 !important; transform:none !important; }
+      .page-break{ break-before: page; page-break-before: always; }
+      .avoid-break{ break-inside: avoid; page-break-inside: avoid; }
+      /* Make hero printable with less ink */
+      .hero-media img{ filter: saturate(.9) contrast(1) brightness(.9); transform:none; }
+      .hero-overlay, .hero-ink{ background: rgba(255,255,255,.88); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .marquee-track{ animation: none !important; }
+      .wash::after{ animation: none !important; }
+      .reveal{ transition:none !important; }
     }
   </style>
-
-  <!-- Layout inspired by Compro-Synergy-Solusi-2024-V1.pdf (benchmark only). Content and company data are for Pixel Solusindo / CV Cipta Kreasitama. -->
 </head>
 
-<body class="bg-slate-50 text-slate-800 leading-relaxed">
-
-<!-- TOP BAR -->
-<div class="no-print sticky top-0 z-50 border-b border-slate-200/70 bg-white/60 backdrop-blur">
-  <div class="container-inner flex items-center justify-between py-3">
-    <div class="flex items-center gap-4">
-      <div class="h-10 flex items-center">
-        <img src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=pixel-solusindo-logo-hd-square-notext-751ad4cd.webp" alt="Pixel Solusindo" class="h-8 w-auto" />
-      </div>
-      <div>
-        <div class="text-sm font-semibold">CV Cipta Kreasitama</div>
-        <div class="text-xs text-slate-500">Pixel Solusindo • Company Profile</div>
-      </div>
-    </div>
-    <div class="flex items-center gap-3">
-      <a href="#contact" class="text-sm text-slate-700 hover:text-slate-900">Kontak</a>
-      <button onclick="window.print()" class="bg-slate-900 px-4 py-2 text-xs font-semibold text-white rounded">
-        Print / Save PDF
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- HERO (Portfolio-style) -->
-<section class="page-landscape full-bleed bg-grid">
-  <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden mx-0">
-
-    <!-- TOP : IDENTITY -->
-    <div class="px-14 pt-10 pb-6">
-      <div class="flex items-center gap-4">
-        <div class="h-14 flex items-center">
-          <img src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=pixel-solusindo-logo-hd-square-notext-751ad4cd.webp" alt="Pixel Solusindo" class="h-12 w-auto" />
-        </div>
-
-        <div>
-          <div class="text-xs uppercase tracking-widest text-slate-500">Company Profile</div>
-          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-            <img src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png" alt="Pixel Solusindo" class="h-10 w-auto inline-block" />
-            CV Cipta Kreasitama
-          </h1>
-        </div>
-      </div>
-
-      <p class="mt-5 max-w-4xl text-lg leading-relaxed text-slate-600">
-        CV Cipta Kreasitama (Pixel Solusindo) membangun sistem operasional dan keamanan dengan pendekatan <span class="font-semibold text-slate-800">standar kerja</span>, <span class="font-semibold text-slate-800">struktur yang rapi</span>, dan <span class="font-semibold text-slate-800">keberlanjutan jangka panjang</span> untuk kebutuhan bisnis, pemerintahan, dan institusi.
-      </p>
-    </div>
-
-    <!-- CENTER : PHOTO STRIP -->
-    <div class="relative mx-0 h-[48vh] md:h-[60vh]">
-      <img src="./hero.jpg" alt="Implementation field" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/2400x800?text=Company+Hero+Image'"/>
-      <div class="absolute inset-0 bg-slate-900/20"></div>
-
-      <div class="absolute bottom-4 right-10 rounded-xl bg-white/95 backdrop-blur border border-slate-200 px-4 py-2">
-        <div class="text-xs text-slate-500">Field Implementation</div>
-        <div class="text-sm font-semibold text-slate-800">Installation • Infrastructure • Operations</div>
-      </div>
-    </div>
-
-    <!-- BOTTOM : SCOPE ICONS -->
-    <div class="px-14 pt-8 pb-10 mt-auto">
-      <div class="grid grid-cols-4 gap-10 text-center">
-
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
-              <rect x="6" y="18" width="28" height="14" rx="4" stroke="currentColor" stroke-width="2"/>
-              <circle cx="26" cy="25" r="4" stroke="currentColor" stroke-width="2"/>
-              <path d="M34 20l8-8" stroke="currentColor" stroke-width="2"/>
-            </svg>
+<body class="bg-white text-slate-900">
+  <!-- Top bar -->
+  <header class="sticky-nav no-print">
+    <div class="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-4">
+        <div class="flex items-center gap-3">
+          <img
+            src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=pixel-solusindo-logo-hd-square-notext-751ad4cd.webp"
+            alt="Pixel Solusindo"
+            class="h-10 w-10 object-contain"
+          />
+          <div class="leading-tight">
+            <div class="text-[11px] font-semibold tracking-[0.32em] text-slate-600 uppercase">Compro Pixel</div>
+            <div class="text-sm font-semibold text-slate-900">CV Cipta Kreasitama • Company Profile</div>
           </div>
-          <div class="font-semibold text-slate-800">CCTV Systems</div>
-          <div class="text-xs text-slate-500">Certified installation</div>
         </div>
 
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
-              <rect x="6" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
-              <rect x="30" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
-              <rect x="18" y="28" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
-              <path d="M12 20v6l12 4l12-4v-6" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="font-semibold text-slate-800">Network</div>
-          <div class="text-xs text-slate-500">Structured infrastructure</div>
-        </div>
-
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
-              <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/>
-              <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="font-semibold text-slate-800">MRO</div>
-          <div class="text-xs text-slate-500">Preventive maintenance</div>
-        </div>
-
-        <div class="space-y-3">
-          <div class="mx-auto h-12 w-12 rounded-xl border border-slate-200 bg-slate-50 grid place-items-center">
-            <svg viewBox="0 0 48 48" class="h-6 w-6 text-slate-700" fill="none">
-              <rect x="10" y="16" width="28" height="18" rx="4" stroke="currentColor" stroke-width="2"/>
-              <path d="M18 16v-4h12v4" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="font-semibold text-slate-800">Procurement</div>
-          <div class="text-xs text-slate-500">Authorized devices</div>
-        </div>
-
+        <nav class="hidden lg:flex items-center gap-6 text-[11px] font-semibold tracking-[0.28em] text-slate-600 uppercase">
+          <a href="#overview" class="hover:text-slate-900">Overview</a>
+          <a href="#solutions" class="hover:text-slate-900">Solusi</a>
+          <a href="#contact" class="hover:text-slate-900">Kontak</a>
+        </nav>
       </div>
     </div>
+  </header>
 
-  </div>
-</section>
-
-<!-- ACHIEVEMENTS (company data) -->
-<section class="border border-slate-200 bg-transparent shadow-sm">
-  <div class="p-6 sm:p-8">
-    <h2 class="text-xl font-extrabold">Prestasi & Capaian</h2>
-    <p class="mt-2 text-slate-600 max-w-3xl">Beberapa capaian CV Cipta Kreasitama (Pixel Solusindo):</p>
-
-    <div class="mt-6 grid grid-cols-3 gap-6 text-center">
-      <div class="bg-slate-50 border border-slate-200 p-4 rounded">
-        <div class="text-xs text-slate-500">Customer</div>
-        <div class="text-2xl font-bold">300+</div>
+  <!-- HERO (edge-to-edge, white enterprise) -->
+  <section class="edge wash bg-grid">
+    <div class="relative min-h-[720px] overflow-hidden">
+      <div class="hero-media">
+        <!-- You can swap to ./assets/img/hero.jpg if you want -->
+        <img src="./top-current-clients/desaCemagi/cemagi3.png" alt="Implementasi lapangan" />
       </div>
-      <div class="bg-slate-50 border border-slate-200 p-4 rounded">
-        <div class="text-xs text-slate-500">Project</div>
-        <div class="text-2xl font-bold">500+</div>
-      </div>
-      <div class="bg-slate-50 border border-slate-200 p-4 rounded">
-        <div class="text-xs text-slate-500">Partner</div>
-        <div class="text-2xl font-bold">50+</div>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="hero-overlay"></div>
+      <div class="hero-ink"></div>
 
-
-<main class="bg-grid w-full">
-
-  <div class="container-inner pb-12 space-y-6">
-
-<!-- ABOUT -->
-<section class="3xl border border-slate-200 bg-transparent shadow-sm">
-  <div class="p-6 sm:p-8">
-    <h2 class="text-xl font-extrabold">A. Tentang Perusahaan</h2>
-    <p class="mt-3 text-slate-600 max-w-4xl">
-      CV Cipta Kreasitama menyediakan solusi teknologi yang terintegrasi
-      untuk mendukung kebutuhan keamanan, operasional, dan sistem IT
-      pelanggan, baik sektor swasta, pemerintahan, maupun B2B.
-    </p>
-
-    <div class="mt-6 grid sm:grid-cols-3 gap-4">
-      <div class="2xl border border-slate-200 bg-slate-50 p-4">
-        <div class="text-xs text-slate-500">Customer</div>
-        <div class="text-lg font-bold">300+</div>
-      </div>
-      <div class="2xl border border-slate-200 bg-slate-50 p-4">
-        <div class="text-xs text-slate-500">Project</div>
-        <div class="text-lg font-bold">500+</div>
-      </div>
-      <div class="2xl border border-slate-200 bg-slate-50 p-4">
-        <div class="text-xs text-slate-500">Partner</div>
-        <div class="text-lg font-bold">50+</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VISION MISSION -->
-<section class="3xl border border-slate-200 bg-transparent  shadow-sm">
-  <div class="p-6 sm:p-8">
-    <h2 class="text-xl font-extrabold">B. Visi & Misi</h2>
-
-    <h3 class="mt-4 font-bold">Visi</h3>
-    <p class="mt-2 text-slate-600 max-w-4xl">
-      Menjadi mitra terpercaya dalam solusi IT terintegrasi di Bali
-      untuk mendukung transformasi digital yang aman, efisien,
-      inovatif, dan berkelanjutan.
-    </p>
-
-    <h3 class="mt-4 font-bold">Misi</h3>
-    <ul class="mt-2 list-disc pl-5 text-slate-600 space-y-1 max-w-4xl">
-      <li>Menyediakan solusi IT yang menyeluruh dan terintegrasi.</li>
-      <li>Memberikan layanan profesional dengan hasil terukur.</li>
-      <li>Membangun tim yang kompeten dan adaptif.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- LEGAL -->
-<section class="3xl border border-slate-200 bg-transparent  shadow-sm">
-  <div class="p-6 sm:p-8">
-    <h2 class="text-xl font-extrabold">C. Legalitas Perusahaan</h2>
-
-    <div class="mt-4 grid sm:grid-cols-2 gap-4">
-      <div class="2xl border border-slate-200 bg-slate-50 p-4">
-        <div class="text-xs text-slate-500">NPWP</div>
-        <div class="font-mono font-semibold">03.326.191.8-906.000</div>
-      </div>
-      <div class="2xl border border-slate-200 bg-slate-50 p-4">
-        <div class="text-xs text-slate-500">NIB</div>
-        <div class="text-sm text-slate-600">Tercantum dalam dokumen resmi perusahaan</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ORGANIZATION -->
-<section class="print-break 3xl border border-slate-200 bg-transparent  shadow-sm">
-  <div class="p-6 sm:p-8">
-    <h2 class="text-xl font-extrabold mb-6">D. Struktur Organisasi</h2>
-
-    <!-- SVG ORG CHART -->
-    <div class="overflow-x-auto">
-      <svg width="1000" height="700" viewBox="0 0 1000 700" class="mx-auto block">
+      <!-- Decorative inline SVG (enterprise, subtle) -->
+      <svg class="absolute -top-24 -right-24 h-[420px] w-[420px] opacity-[0.10] no-print" viewBox="0 0 200 200" aria-hidden="true">
         <defs>
-          <style>
-            .box { fill:#fff; stroke:#cbd5e1; stroke-width:1.2; rx:16; }
-            .title { font-size:13px; font-weight:700; fill:#0f172a; }
-            .role { font-size:11px; fill:#475569; }
-            .line { stroke:#94a3b8; stroke-width:1.2; }
-          </style>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#38bdf8"/>
+            <stop offset="1" stop-color="#f59e0b"/>
+          </linearGradient>
         </defs>
-
-        <!-- Director -->
-        <rect x="380" y="20" width="240" height="70" class="box"/>
-        <text x="500" y="48" text-anchor="middle" class="title">I Putu Gede Arsa Pradyana</text>
-        <text x="500" y="66" text-anchor="middle" class="role">Managing Director</text>
-
-        <line x1="500" y1="90" x2="500" y2="120" class="line"/>
-
-        <!-- Level 2 -->
-        <rect x="160" y="120" width="260" height="70" class="box"/>
-        <text x="290" y="148" text-anchor="middle" class="title">I Putu Eka Hendrayana</text>
-        <text x="290" y="166" text-anchor="middle" class="role">Chief Marketing Officer</text>
-
-        <rect x="580" y="120" width="260" height="70" class="box"/>
-        <text x="710" y="148" text-anchor="middle" class="title">Ni Made Sasmita Kharisma</text>
-        <text x="710" y="166" text-anchor="middle" class="role">Accounting & Monitoring</text>
-
-        <line x1="500" y1="120" x2="290" y2="120" class="line"/>
-        <line x1="500" y1="120" x2="710" y2="120" class="line"/>
-
-        <!-- Level 3 -->
-        <rect x="80" y="260" width="220" height="70" class="box"/>
-        <text x="190" y="288" text-anchor="middle" class="title">Operation Head</text>
-
-        <rect x="300" y="260" width="220" height="70" class="box"/>
-        <text x="410" y="288" text-anchor="middle" class="title">Sales & Marketing Head</text>
-
-        <rect x="520" y="260" width="220" height="70" class="box"/>
-        <text x="630" y="288" text-anchor="middle" class="title">Engineering Planning SPV</text>
-
-        <rect x="740" y="260" width="220" height="70" class="box"/>
-        <text x="850" y="288" text-anchor="middle" class="title">Technician Coordinator</text>
-
-        <line x1="290" y1="190" x2="190" y2="260" class="line"/>
-        <line x1="290" y1="190" x2="410" y2="260" class="line"/>
-        <line x1="710" y1="190" x2="630" y2="260" class="line"/>
-        <line x1="710" y1="190" x2="850" y2="260" class="line"/>
+        <path fill="url(#g1)" d="M44.9,-74.2C57.8,-69.5,67.6,-57.5,74.1,-44.2C80.6,-30.9,83.8,-16.4,82.8,-2.1C81.8,12.2,76.6,26.4,68.7,39.6C60.8,52.8,50.3,65,37.2,71.6C24.1,78.2,8.4,79.2,-6.8,76.9C-22,74.6,-36.8,69,-48.9,60C-61,51,-70.5,38.6,-74.4,24.7C-78.3,10.9,-76.6,-4.3,-71.5,-18.1C-66.4,-31.9,-57.8,-44.3,-46.2,-51.8C-34.6,-59.3,-19.9,-61.9,-5.5,-63.3C9,-64.7,18,-64.9,44.9,-74.2Z" transform="translate(100 100)"/>
       </svg>
-    </div>
 
-    <p class="mt-4 text-sm text-slate-600 max-w-3xl">
-      Struktur organisasi dirancang untuk memastikan
-      alur koordinasi yang jelas dari manajemen hingga
-      eksekusi operasional di lapangan.
-    </p>
-  </div>
-</section>
-<!-- SERVICES -->
- 
-<!-- SOLUTION PRESENTATION -->
-<section id="services" class="print-break border border-slate-200 bg-transparent  shadow-sm">
-  <div class="p-6 sm:p-8">
-    <h2 class="text-xl font-extrabold">
-      Solusi Apa yang Kami Bangun?
-    </h2>
-    <p class="mt-2 max-w-3xl text-slate-600">
-      Sebagai bagian dari layanan <span class="font-semibold">One Stop HSSEE Solutions</span>, kami percaya solusi yang baik dimulai dari pemahaman mendalam terhadap masalah operasional sebelum menentukan produk.
-    </p>
+      <div class="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-14 sm:pt-16 lg:pt-20 pb-12">
+          <div class="lg:col-span-7">
+            <div class="inline-flex items-center gap-2 border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-700">
+              <span class="inline-block h-2 w-2 bg-slate-900"></span>
+              Compro Pixel
+            </div>
 
-    <div class="mt-8 space-y-8">
+            <!-- COPY (UNCHANGED) -->
+            <h1 class="mt-5 text-[clamp(2.2rem,4vw,3.4rem)] font-semibold leading-[1.08] text-slate-900">
+              Penggerak sistem keamanan lapangan yang profesional, terukur, dan siap diuji.
+            </h1>
+            <p class="mt-5 max-w-[56ch] text-base sm:text-[17px] leading-relaxed text-slate-700">
+              Kami mendesain dan mengelola CCTV, jaringan, dan operasi lapangan untuk institusi pemerintah, hospitality, dan korporasi dengan standar dokumentasi yang ketat.
+            </p>
 
-      <!-- CCTV -->
-      <div class="grid md:grid-cols-2 gap-6 items-center">
-        <div>
-  <h3 class="text-lg font-bold">
-    Apakah sistem ini dipasang dengan standar yang bisa dipertanggungjawabkan?
-  </h3>
-  <p class="mt-2 text-slate-600">
-    Banyak sistem CCTV berfungsi secara teknis,
-    tetapi tidak dipasang mengikuti standar operasional yang jelas,
-    sehingga kualitas rekaman dan keandalannya tidak konsisten.
-  </p>
-  <p class="mt-2 text-slate-600">
-    Kami mengutamakan
-    <span class="font-semibold">instalasi CCTV indoor dan outdoor yang tersertifikasi</span>,
-    mengikuti prosedur pemasangan, pengujian, dan dokumentasi yang terstandar,
-    untuk memastikan sistem aman, konsisten,
-    dan berkelanjutan.
-  </p>
-</div>
-
-
-          <!-- CCTV IMAGE -->
-          <div class="2xl border border-slate-200 bg-slate-50 p-4">
-            <img src="https://via.placeholder.com/800x500?text=CCTV+Installation+Placeholder" alt="CCTV installation placeholder" class="w-full h-48 object-cover rounded-md" />
+            <div class="mt-7 flex flex-wrap gap-2">
+              <span class="border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-700">Field • Infrastructure • Operations</span>
+              <span class="border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-700">Bali &amp; Indonesia</span>
+              <span class="border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-700">Reporting &amp; Monitoring</span>
+              <span class="border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-700">MRO &amp; Procurement</span>
+            </div>
           </div>
 
-      </div>
+          <!-- Right panel (sharp, enterprise) -->
+          <div class="lg:col-span-5">
+            <div class="panel print-reset-shadow border-slate-200 bg-white/90 p-6 sm:p-7">
+              <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">
+                Implementation Focus
+              </div>
 
-      <!-- NETWORK INFRASTRUCTURE -->
-      <div class="grid md:grid-cols-2 gap-6 items-center">
-        <!-- NETWORK IMAGE -->
-        <div class="order-2 md:order-1 2xl border border-slate-200 bg-slate-50 p-4">
-          <img src="https://via.placeholder.com/800x500?text=Network+Infrastructure+Placeholder" alt="Network infrastructure placeholder" class="w-full h-48 object-cover rounded-md" />
+              <!-- COPY (UNCHANGED) -->
+              <h2 class="mt-3 text-2xl sm:text-[28px] font-semibold leading-tight text-slate-900">
+                Field • Infrastructure • Operations
+              </h2>
+              <p class="mt-4 text-sm sm:text-[15px] leading-relaxed text-slate-700">
+                Koordinasi end-to-end memastikan engineering, procurement, dan delivery berjalan dalam orkestrasi lapangan yang jelas dengan dokumentasi yang dapat diaudit.
+              </p>
+
+              <div class="mt-6 grid gap-3">
+                <div class="flex items-start gap-3">
+                  <!-- inline svg icon -->
+                  <svg class="ico mt-[2px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <div class="text-sm text-slate-800">Standar kerja, SOP, dan quality gate.</div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <svg class="ico mt-[2px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3v3m6.364.636-2.121 2.121M21 12h-3M18.364 17.364l-2.121-2.121M12 21v-3M7.757 16.243l-2.121 2.121M3 12h3M5.636 5.636l2.121 2.121" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <div class="text-sm text-slate-800">Preventive + corrective maintenance oversight.</div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <svg class="ico mt-[2px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9 9 9 0 0 1-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <div class="text-sm text-slate-800">Monitoring &amp; sustainability reporting.</div>
+                </div>
+              </div>
+
+              <div class="mt-7 border-t border-slate-200 pt-5 flex items-center justify-between gap-4">
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">Company profile 2026</div>
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-700">Pixel Solusindo</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="order-1 md:order-2">
-          <h3 class="text-lg font-bold">
-            Apakah jaringan sudah dibangun dengan benar sejak awal?
-          </h3>
-          <p class="mt-2 text-slate-600">
-            Banyak masalah operasional muncul
-            bukan karena perangkat,
-            tetapi karena <span class="font-semibold">infrastruktur jaringan yang tidak rapi</span>.
-          </p>
-          <p class="mt-2 text-slate-600">
-            Kami membangun
-            <span class="font-semibold">infrastruktur jaringan</span>
-            yang terstruktur dan stabil,
-            agar sistem dapat berjalan konsisten,
-            mudah dikembangkan,
-            dan tidak menjadi sumber masalah di kemudian hari.
-          </p>
+        <!-- Print hint bar (optional) -->
+        <div class="pb-10 no-print">
+          <div class="panel border-slate-200 bg-white/75 px-4 py-3 text-xs text-slate-600 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <svg class="h-4 w-4 text-slate-700" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9V3h12v6" stroke="currentColor" stroke-width="2"/>
+                <path d="M6 17h12v4H6v-4Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M6 13H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span><strong class="font-semibold text-slate-800">Print-ready:</strong> gunakan kertas Folio/F4. Portrait default, atau pilih Landscape di dialog print.</span>
+            </div>
+            <button type="button" id="btnPrint" class="border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-700 hover:text-slate-900">
+              Print / Save PDF
+            </button>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- MRO -->
-      <div class="grid md:grid-cols-2 gap-6 items-center">
+  <!-- CLIENTS STRIP (edge-to-edge) -->
+  <section class="edge bg-white page-break">
+    <div class="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8 py-10">
+      <div class="reveal">
+        <div class="flex flex-col gap-3">
+          <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Top clients &amp; coverage</div>
+          <div class="text-2xl sm:text-3xl font-semibold text-slate-900">Kolaborasi lapangan terbaru kami</div>
+          <p class="max-w-[80ch] text-slate-600">
+            Aneka pekerjaan lapangan dari desa digitalisasi hingga resort network disajikan dengan dokumentasi visual dan data minimal.
+          </p>
+        </div>
+
+        <div class="marquee mt-6 avoid-break">
+          <div class="marquee-track" id="marqueeTrack">
+            <!-- Card 1 -->
+            <article class="panel border-slate-200 bg-white p-4 w-[280px]">
+              <div class="flex items-center gap-3">
+                <img src="./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg" alt="Desa Cemagi" class="h-11 w-11 object-cover border border-slate-200" />
+                <div class="leading-tight">
+                  <div class="font-semibold text-slate-900">Desa Cemagi • Badung</div>
+                  <div class="text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-500">Government • CCTV modern</div>
+                </div>
+              </div>
+              <p class="mt-3 text-sm text-slate-600">
+                70 kamera CCTV + monitoring real-time untuk desa wisata dengan laporan teknis terstruktur setiap minggu.
+              </p>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="panel border-slate-200 bg-white p-4 w-[280px]">
+              <div class="flex items-center gap-3">
+                <img src="./top-current-clients/desa-Pererenan/pererenan-kantordesa.png" alt="Desa Pererenan" class="h-11 w-11 object-cover border border-slate-200" />
+                <div class="leading-tight">
+                  <div class="font-semibold text-slate-900">Desa Pererenan • Badung</div>
+                  <div class="text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-500">Digitalization • Community</div>
+                </div>
+              </div>
+              <p class="mt-3 text-sm text-slate-600">
+                CCTV digitalisasi sejak 2021 mencakup jalur utama, memberi data keamanan yang bisa dibagikan ke aparat.
+              </p>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="panel border-slate-200 bg-white p-4 w-[280px]">
+              <div class="flex items-center gap-3">
+                <img src="./top-current-clients/deLhokaUbud/it-manager-delhokaubud.jpeg" alt="de Lhoka Ubud" class="h-11 w-11 object-cover border border-slate-200" />
+                <div class="leading-tight">
+                  <div class="font-semibold text-slate-900">de Lhoka Ubud • Hospitality</div>
+                  <div class="text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-500">Network refresh</div>
+                </div>
+              </div>
+              <p class="mt-3 text-sm text-slate-600">
+                70 titik jaringan + 6 access points baru untuk menjaga konektivitas tamu dan fasilitas operasional.
+              </p>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="panel border-slate-200 bg-white p-4 w-[280px]">
+              <div class="flex items-center gap-3">
+                <img src="./top-current-clients/arkac/Arkac1pakTaufan.jpeg" alt="Arkac" class="h-11 w-11 object-cover border border-slate-200" />
+                <div class="leading-tight">
+                  <div class="font-semibold text-slate-900">Arkac • Denpasar</div>
+                  <div class="text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-500">Mixed-use campus</div>
+                </div>
+              </div>
+              <p class="mt-3 text-sm text-slate-600">
+                16 kamera CCTV + monitoring 24/7 menjaga keamanan area bisnis dan customer experience.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Small inline SVG divider -->
+        <div class="mt-8 flex items-center gap-3 text-slate-500">
+          <svg class="h-5 w-5 text-slate-700" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="text-[11px] font-semibold tracking-[0.28em] uppercase">Field evidence strip</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT (edge-to-edge bands, print-friendly breaks) -->
+  <main class="edge bg-slate-50">
+    <div class="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8 py-10">
+      <!-- OVERVIEW -->
+      <section id="overview" class="panel border-slate-200 bg-white p-6 sm:p-8 reveal avoid-break">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-7">
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Profil</div>
+            <h2 class="mt-2 text-2xl sm:text-3xl font-semibold text-slate-900">Profil CV Cipta Kreasitama</h2>
+            <!-- COPY (UNCHANGED) -->
+            <p class="mt-4 text-slate-600 leading-relaxed">
+              Compro Pixel bergerak sebagai mitra teknis dalam membangun sistem keamanan lapangan, jaringan, monitoring, hingga pengadaan perangkat IT.
+            </p>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="grid grid-cols-3 gap-3">
+              <div class="border border-slate-200 bg-slate-50 p-4">
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-500">Customers</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">300+</div>
+              </div>
+              <div class="border border-slate-200 bg-slate-50 p-4">
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-500">Projects</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">500+</div>
+              </div>
+              <div class="border border-slate-200 bg-slate-50 p-4">
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-500">Partners</div>
+                <div class="mt-2 text-2xl font-semibold text-slate-900">50+</div>
+              </div>
+            </div>
+
+            <!-- Inline SVG KPI accent -->
+            <div class="mt-4 border border-slate-200 bg-white p-4">
+              <div class="flex items-start gap-3">
+                <svg class="h-5 w-5 text-slate-800 mt-[2px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 19V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M7 14l3-3 3 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Dokumentasi dan monitoring menjadi standar kerja agar progres dan hasil bisa diverifikasi stakeholder.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VISION / MISSION -->
+      <section class="panel border-slate-200 bg-white p-6 sm:p-8 reveal mt-8 avoid-break page-break">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Visi</div>
+            <!-- COPY (UNCHANGED) -->
+            <h2 class="mt-2 text-xl sm:text-2xl font-semibold text-slate-900">
+              Mitra terpercaya transformasi digital aman dan berkelanjutan di Bali.
+            </h2>
+            <!-- COPY (UNCHANGED) -->
+            <p class="mt-3 text-slate-600 leading-relaxed">
+              Menyediakan solusi IT terintegrasi yang mencakup CCTV, jaringan, dan operasional lapangan untuk institusi, resort, hingga institusi pemerintahan.
+            </p>
+          </div>
+          <div>
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Misi</div>
+            <!-- COPY (UNCHANGED) -->
+            <ul class="mt-3 space-y-2 text-slate-600">
+              <li class="flex gap-2">
+                <span class="text-slate-900 font-semibold">—</span>
+                <span>Menyediakan solusi IT menyeluruh dan terdokumentasi.</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-slate-900 font-semibold">—</span>
+                <span>Menjalin komunikasi terbuka untuk progres yang terukur.</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-slate-900 font-semibold">—</span>
+                <span>Mempertahankan tim adaptif yang siap terjun lapangan.</span>
+              </li>
+            </ul>
+
+            <!-- Decorative inline SVG line -->
+            <svg class="mt-6 h-10 w-full text-slate-200" viewBox="0 0 600 40" fill="none" aria-hidden="true">
+              <path d="M0 20H600" stroke="currentColor" stroke-width="2"/>
+              <path d="M60 20C120 2 180 38 240 20C300 2 360 38 420 20C480 2 540 38 600 20" stroke="currentColor" stroke-width="2" opacity=".8"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEGAL -->
+      <section class="panel border-slate-200 bg-white p-6 sm:p-8 reveal mt-8 avoid-break">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Legalitas</div>
+            <h2 class="mt-2 text-xl sm:text-2xl font-semibold text-slate-900">Kredensial dan compliance</h2>
+            <!-- COPY (UNCHANGED) -->
+            <p class="mt-3 text-slate-600 leading-relaxed">
+              Dokumen legalitas kami tersedia berdasarkan kebutuhan tender; NPWP, NIB, dan izin lain terarsip rapi.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="border border-slate-200 bg-slate-50 p-4">
+              <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-500">NPWP</div>
+              <!-- COPY (UNCHANGED) -->
+              <div class="mt-2 font-semibold text-slate-900">03.326.191.8-906.000</div>
+            </div>
+            <div class="border border-slate-200 bg-slate-50 p-4">
+              <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-500">NIB</div>
+              <!-- COPY (UNCHANGED) -->
+              <div class="mt-2 font-semibold text-slate-900">Tersedia sesuai kebutuhan</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ORG -->
+      <section class="panel border-slate-200 bg-white p-6 sm:p-8 reveal mt-8 avoid-break page-break">
         <div>
-          <h3 class="text-lg font-bold">
-            Apakah gangguan kecil harus selalu menunggu sampai menjadi masalah besar?
-          </h3>
-          <p class="mt-2 text-slate-600">
-            Tanpa pemeliharaan yang jelas,
-            gangguan kecil sering diabaikan
-            hingga berdampak ke banyak aktivitas.
+          <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Organization</div>
+          <h2 class="mt-2 text-xl sm:text-2xl font-semibold text-slate-900">Struktur operasional Pixel Solusindo</h2>
+          <!-- COPY (UNCHANGED) -->
+          <p class="mt-3 text-slate-600 leading-relaxed">
+            Koordinasi dari Managing Director hingga pelaksana lapangan ditata untuk respons cepat dan transparan.
           </p>
-          <p class="mt-2 text-slate-600">
-            Melalui
-            <span class="font-semibold">Maintenance, Repair & Overhaul (MRO)</span>,
-            kami membantu menjaga sistem tetap berjalan
-            sebelum gangguan berkembang menjadi kerusakan serius.
+
+          <div class="mt-6 grid sm:grid-cols-3 gap-3">
+            <div class="border border-slate-200 bg-slate-50 p-4 font-semibold text-slate-900">Managing Director</div>
+            <div class="border border-slate-200 bg-slate-50 p-4 font-semibold text-slate-900">CMO + Operations</div>
+            <div class="border border-slate-200 bg-slate-50 p-4 font-semibold text-slate-900">Engineering + Field Teams</div>
+          </div>
+
+          <!-- Inline SVG org connector (subtle) -->
+          <div class="mt-6 overflow-hidden border border-slate-200 bg-white p-4">
+            <img
+              src="./struktur-Pixel.png"
+              alt="Struktur operasional Pixel Solusindo"
+              class="w-full h-auto object-contain"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- SOLUTIONS -->
+      <section id="solutions" class="panel border-slate-200 bg-white p-6 sm:p-8 reveal mt-8 avoid-break">
+        <div>
+          <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Solutions</div>
+          <h2 class="mt-2 text-xl sm:text-2xl font-semibold text-slate-900">Ruang lingkup layanan</h2>
+          <!-- COPY (UNCHANGED) -->
+          <p class="mt-3 text-slate-600 leading-relaxed">
+            Layanan kami menyasar area CCTV, jaringan, MRO, dan pengadaan, dipadukan ke satu tim operasional.
           </p>
+
+          <div class="mt-6 grid sm:grid-cols-2 gap-3">
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-slate-800" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M8 21h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M7 11h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <!-- COPY (UNCHANGED) -->
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">CCTV</div>
+              </div>
+              <!-- COPY (UNCHANGED) -->
+              <div class="mt-3 text-slate-700">Instalasi terstandar, pengujian, dan operator training.</div>
+            </div>
+
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-slate-800" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 8h16v8H4V8Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M6 20h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <!-- COPY (UNCHANGED) -->
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">Network</div>
+              </div>
+              <!-- COPY (UNCHANGED) -->
+              <div class="mt-3 text-slate-700">Topologi yang stabil, mudah dipantau, dan scalable.</div>
+            </div>
+
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-slate-800" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 7h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M5 7l2 14h10l2-14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M9 11v6M15 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <!-- COPY (UNCHANGED) -->
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">MRO</div>
+              </div>
+              <!-- COPY (UNCHANGED) -->
+              <div class="mt-3 text-slate-700">Preventive &amp; corrective maintenance ditangani lapangan.</div>
+            </div>
+
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-slate-800" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 7l-8-4-8 4v10l8 4 8-4V7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M12 3v18" stroke="currentColor" stroke-width="2" opacity=".7"/>
+                  <path d="M4 7l8 4 8-4" stroke="currentColor" stroke-width="2" opacity=".7"/>
+                </svg>
+                <!-- COPY (UNCHANGED) -->
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">Procurement</div>
+              </div>
+              <!-- COPY (UNCHANGED) -->
+              <div class="mt-3 text-slate-700">Pengadaan perangkat resmi, terukur, dan terdokumentasi.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAP / COVERAGE -->
+      <section class="panel border-slate-200 bg-white p-6 sm:p-8 reveal mt-8 avoid-break page-break">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Project map</div>
+            <h2 class="mt-2 text-xl sm:text-2xl font-semibold text-slate-900">Sebaran cakupan proyek</h2>
+            <!-- COPY (UNCHANGED) -->
+            <p class="mt-3 text-slate-600 leading-relaxed">
+              Visualisasi Bali, area utama, dan data top clients untuk referensi cepat stakeholder.
+            </p>
+          </div>
+          <div>
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Coverage highlights</div>
+            <!-- COPY (UNCHANGED) -->
+            <ul class="mt-3 space-y-2 text-slate-700">
+              <li>• Badung • Desa Cemagi + Pererenan</li>
+              <li>• Ubud • Resort &amp; hospitality</li>
+              <li>• Denpasar • Commercial campus &amp; MRO</li>
+            </ul>
+          </div>
         </div>
 
-        <!-- MRO IMAGE -->
-        <div class="2xl border border-slate-200 bg-slate-50 p-4">
-          <img src="https://via.placeholder.com/800x500?text=Maintenance+Placeholder" alt="Maintenance placeholder" class="w-full h-48 object-cover rounded-md" />
+        <div class="mt-6 overflow-hidden border border-slate-200 bg-white avoid-break">
+          <iframe
+            src="https://maps.google.com/maps?q=Bali&t=&z=9&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            title="Project coverage map"
+            class="w-full h-[340px] border-0"
+          ></iframe>
         </div>
-      </div>
-
-      <!-- PROCUREMENT -->
-      <div class="grid md:grid-cols-2 gap-6 items-center">
-        <!-- PROCUREMENT IMAGE -->
-        <div class="order-2 md:order-1 2xl border border-slate-200 bg-slate-50 p-4">
-          <img src="https://via.placeholder.com/800x500?text=Procurement+Placeholder" alt="Procurement placeholder" class="w-full h-48 object-cover rounded-md" />
-        </div>
-
-        <div class="order-1 md:order-2">
-          <h3 class="text-lg font-bold">
-            Ketika terjadi masalah, apakah jelas asal perangkatnya?
-          </h3>
-          <p class="mt-2 text-slate-600">
-            Perangkat tanpa standar sering menyulitkan:
-            sulit didukung, tidak konsisten,
-            dan rawan masalah jangka panjang.
-          </p>
-          <p class="mt-2 text-slate-600">
-            Kami menangani
-            <span class="font-semibold">pengadaan perangkat CCTV, komputer, dan sistem keamanan</span>
-            dengan prinsip kejelasan:
-            resmi, sesuai kebutuhan,
-            dan mudah dipertanggungjawabkan.
-          </p>
-        </div>
-      </div>
-
+      </section>
     </div>
+  </main>
 
-    <!-- CLOSING -->
-    <div class="mt-10 2xl border border-slate-200 bg-slate-900 p-6">
-      <p class="text-sm text-white">
-        Bagi kami, sistem yang baik bukan yang paling kompleks,
-        tetapi yang <span class="font-semibold">tetap bekerja tanpa drama</span>
-        saat digunakan setiap hari.
-      </p>
-    </div>
+  <!-- CONTACT -->
+  <section id="contact" class="edge bg-white page-break">
+    <div class="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8 py-10">
+      <div class="panel border-slate-200 bg-white p-6 sm:p-8 reveal print-reset-shadow">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <div class="text-[11px] font-semibold tracking-[0.32em] uppercase text-slate-600">Contact</div>
+            <h2 class="mt-2 text-xl sm:text-2xl font-semibold text-slate-900">Pixel Solusindo HQ</h2>
+            <!-- COPY (UNCHANGED) -->
+            <p class="mt-3 text-slate-600 leading-relaxed">
+              Tim operasional siap menghubungi Anda untuk tender CCTV, jaringan, pengadaan, atau MRO lapangan.
+            </p>
 
-  </div>
-</section>
+            <div class="mt-6 space-y-2 text-sm text-slate-700">
+              <div><span class="font-semibold text-slate-900">Email:</span> info@pixelsolusindo.com</div>
+              <div><span class="font-semibold text-slate-900">Phone:</span> +62 811-3961-8857</div>
+              <div><span class="font-semibold text-slate-900">Alamat:</span> Jl. Kopral I Nym Suwena No.49, Buduk, Mengwi, Badung, Bali</div>
+            </div>
 
+            <!-- Inline svg signature bar -->
+            <div class="mt-7 border-t border-slate-200 pt-5 flex items-center justify-between gap-4">
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-slate-800" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4-6.5 4 2-7L2 9h7l3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">CV Cipta Kreasitama</div>
+              </div>
+              <div class="text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-600">Company profile 2026</div>
+            </div>
+          </div>
 
-
-<!-- CONTACT -->
-<section id="contact" class="print-break bg-white full-bleed">
-  <div class="container-inner border-t border-slate-200 py-16">
-    <div class="grid md:grid-cols-2 gap-8 items-start">
-      <div>
-        <h2 class="text-2xl font-extrabold">F. Kontak Perusahaan</h2>
-        <p class="mt-4 text-slate-600">Hubungi kami untuk diskusi kebutuhan CCTV, infrastruktur jaringan, pengadaan, atau layanan MRO.</p>
-
-        <div class="mt-6 space-y-3 text-slate-600">
-          <div><strong>Telepon:</strong> +62 81139618857</div>
-          <div><strong>Email:</strong> ciptakreasitama.ind@gmail.com</div>
-          <div><strong>Alamat:</strong> Jl. Kopral I Nym Suwena No.49, Buduk, Mengwi, Badung, Bali</div>
-        </div>
-
-        <div class="mt-6">
-          <a href="mailto:ciptakreasitama.ind@gmail.com" class="inline-block bg-[var(--brand)] text-white px-5 py-3 rounded font-semibold">Kirim Email</a>
+          <div class="overflow-hidden border border-slate-200 bg-white avoid-break">
+            <iframe
+              src="https://maps.google.com/maps?q=Pixel%20Solusindo%20HQ,%20Buduk,%20Mengwi,%20Badung,%20Bali&output=embed"
+              loading="lazy"
+              title="Pixel Solusindo HQ"
+              class="w-full h-[340px] border-0"
+            ></iframe>
+          </div>
         </div>
       </div>
 
-      <div>
-        <div class="w-full h-56 rounded border border-slate-200 overflow-hidden">
-          <img src="https://via.placeholder.com/800x450?text=Map+Placeholder" alt="Map placeholder" class="w-full h-full object-cover" />
+      <footer class="mt-10 text-[11px] font-semibold tracking-[0.28em] uppercase text-slate-500">
+        <div class="border-t border-slate-200 pt-5 flex flex-col md:flex-row items-center justify-between gap-3">
+          <span>CV Cipta Kreasitama • Compro Pixel • Pixel Solusindo</span>
+          <span>Company profile 2026</span>
         </div>
-      </div>
+      </footer>
     </div>
-  </div>
-</section>
+  </section>
 
+  <script>
+    // Print button
+    document.getElementById('btnPrint')?.addEventListener('click', () => window.print());
 
-</main>
+    // Reveal on scroll (soft animation)
+    const onReady = () => {
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        }
+      }, { threshold: 0.18, rootMargin: "0px 0px -10% 0px" });
+      els.forEach(el => io.observe(el));
+    };
 
-<!-- FOOTER -->
-<footer class="border-t border-slate-200 bg-white">
-  <div class="container-inner py-6 text-xs text-slate-500 flex flex-col md:flex-row justify-between gap-3">
-    <div>CV Cipta Kreasitama • Pixel Solusindo</div>
-    <div>Company Profile • 2025</div>
-  </div>
-</footer>
+    // Marquee: duplicate items for seamless loop (but keep print stable)
+    const setupMarquee = () => {
+      const track = document.getElementById('marqueeTrack');
+      if (!track) return;
 
+      // Only if not reduced-motion and not print
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
 
+      // Duplicate children once to simulate infinite loop
+      const children = Array.from(track.children);
+      children.forEach((node) => {
+        const clone = node.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      onReady();
+      setupMarquee();
+    });
+  </script>
 </body>
 </html>

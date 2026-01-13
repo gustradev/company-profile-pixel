@@ -1,42 +1,40 @@
 [
   {
-    "id": "cemagi",
-    "name": "Desa Cemagi",
+    "id": "desa-cemagi",
+    "name": "Desa Cemagi — Sistem CCTV Publik",
     "area": "Badung",
-    "point": [-8.6392, 115.1238],
-    "card": [-8.70, 114.45],
-    "photo": "https://placehold.co/260x150"
+    "point": [-8.6496, 115.1445],
+    "card": [-8.01, 114.40],
+    "photo": "./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg",
+    "cardAnchor": [90, 0]
   },
   {
-    "id": "deloca",
-    "name": "De Loca Villa",
+    "id": "desa-pererenan",
+    "name": "Desa Pererenan — Desa Digital",
     "area": "Badung",
-    "point": [-8.6795, 115.1623],
-    "card": [-8.70, 115.90],
-    "photo": "https://placehold.co/260x150"
+    "point": [-8.7057, 115.1661],
+    "card": [-8.50, 114.40],
+    
+    "photo": "./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg",
+    "cardAnchor": [90, 0]
   },
   {
-    "id": "office",
-    "name": "Office Area",
-    "area": "Denpasar",
-    "point": [-8.6501, 115.2169],
+    "id": "de-lhoka",
+    "name": "de Lhoka Ubud — Resort Network",
+    "area": "Ubud",
+    "point": [-8.5061, 115.2628],
     "card": [-7.90, 116.15],
-    "photo": "https://placehold.co/260x150"
+    "photo": "./top-current-clients/deLhokaUbud/de-lhoka-136.jpg",
+    "cardAnchor": [45, 0]
   },
   {
-    "id": "gudang",
-    "name": "Gudang Logistik",
-    "area": "Gianyar",
-    "point": [-8.5941, 115.2045],
-    "card": [-8.10, 115.25], 
-    "photo": "https://placehold.co/260x150"
-  },
-  {
-    "id": "retail",
-    "name": "Retail Commercial",
-    "area": "Tabanan",
-    "point": [-8.6196, 115.1538],
-    "card": [-8.10, 114.40],
-    "photo": "https://placehold.co/260x150"
+    "id": "arkac",
+    "name": "Arkac — Commercial Campus",
+    "area": "Denpasar",
+    "point": [-8.6669, 115.2162],
+    
+    "card": [-8.40, 116.25],
+    "photo": "./top-current-clients/arkac/Arkac2front.jpeg",
+    "cardAnchor": [90, 0]
   }
 ]
