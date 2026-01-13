@@ -19,6 +19,22 @@
     .print-avoid { break-inside: avoid; page-break-inside: avoid; }
     .shadow, .shadow-sm { box-shadow:none !important; }
     a { text-decoration:none !important; color:inherit !important; }
+    section {
+      page-break-after: always;
+      break-after: page;
+      break-inside: avoid;
+      width: 100%;
+      padding: 0 !important;
+      margin: 0 !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      min-height: calc(216mm - 28mm);
+    }
+    .section-animate {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 
     @media screen {
@@ -29,17 +45,32 @@
         background-size:22px 22px;
       }
     }
+    .section-animate {
+      opacity: 0;
+      transform: translateY(32px) scale(0.98);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .section-animate.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .section-animate {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
     /* ===============================
    A4 LANDSCAPE PAGE CONTROL
    =============================== */
 @page {
-  size: A4 landscape;
+  size: legal landscape;
   margin: 14mm;
 }
 
 .page-landscape {
   width: 100%;
-  height: calc(297mm - 28mm); /* A4 landscape height */
+  height: calc(216mm - 28mm); /* Legal landscape height */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -147,6 +178,31 @@
   text-transform: uppercase;
 }
 
+.lang-switch {
+  gap: 0.5rem;
+}
+
+.lang-switch__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: rgba(15, 23, 42, 0.04);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lang-switch__btn.active {
+  background: #0f172a;
+  color: #fff;
+  border-color: transparent;
+}
+
 @media (max-width: 1024px) {
   .service-grid {
     gap: 0.65rem;
@@ -227,6 +283,16 @@
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
+}
+
+.review-photo-card {
+  width: clamp(180px, 38vw, 280px);
+  height: clamp(180px, 38vw, 280px);
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);
+  background: #fff;
 }
 
 @media (max-width: 768px) {
@@ -402,6 +468,130 @@
   letter-spacing: 0.2em;
 }
 
+ .branch-profile-row {
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  padding: clamp(1rem, 2vw, 2rem) 0;
+  display: grid;
+  gap: clamp(1rem, 2vw, 2rem);
+  color: #0f172a;
+}
+
+@media (min-width: 900px) {
+  .branch-profile-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+  .branch-profile-row--reverse .branch-profile-image {
+    order: 2;
+  }
+  .branch-profile-row--reverse .branch-profile-content {
+    order: 1;
+  }
+}
+
+.branch-profile-image {
+  min-height: clamp(260px, 36vw, 360px);
+  border-radius: 0;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15), 0 20px 40px rgba(15, 23, 42, 0.18);
+}
+
+.branch-profile-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.6));
+}
+
+.branch-profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.branch-profile-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #f97316;
+}
+
+.branch-profile-title {
+  font-size: clamp(1.8rem, 2.6vw, 2.25rem);
+  font-weight: 800;
+}
+
+.branch-profile-meta {
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.branch-profile-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.branch-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.branch-profile-actions a {
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.branch-profile-actions a:first-child {
+  background: #0f172a;
+  color: #f8fafc;
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.35);
+}
+
+.branch-profile-actions a.secondary {
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+  background: transparent;
+}
+
+.branch-profile-actions a:hover {
+  transform: translateY(-2px);
+}
+
+.branch-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.rating-stars svg {
+  width: 18px;
+  height: 18px;
+}
+
+.branch-rating span {
+  font-size: 0.65rem;
+}
+
 .map-embed {
   width: 100%;
   border-radius: 20px;
@@ -462,7 +652,6 @@
   height: clamp(420px, 60vw, 640px);
   width: 100%;
   overflow: hidden;
-  border-radius: 18px;
   margin: 0 auto;
 }
 
@@ -511,7 +700,6 @@
   height: clamp(420px, 60vw, 640px);
   width: 100%;
   overflow: hidden;
-  border-radius: 18px;
   margin: 0 auto;
 }
 
@@ -553,8 +741,8 @@
   <div class="border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col h-full w-full rounded-none">
 
     <!-- TOP : IDENTITY -->
-    <div class="px-14 pt-10 pb-6">
-      <div class="flex flex-col gap-4 md:flex-row md:items-center">
+    <div class="px-8 pt-6 pb-4">
+      <div class="flex flex-col gap-3 md:flex-row md:items-center">
         <!-- LOGO PIXEL SOLUSINDO -->
         <div class="hidden md:flex h-14 items-center">
           <img
@@ -565,18 +753,24 @@
         </div>
 
         <div>
-          <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 flex flex-wrap items-center gap-4">
-            PORTFOLIO
-            <img
-              src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png"
-              alt="Pixel Solusindo"
-              class="h-10 w-auto md:h-12"
-            />
-          </h1>
+          <div class="flex flex-wrap items-center gap-2">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 flex flex-wrap items-center gap-4">
+              <span data-i18n="hero.title">PORTFOLIO</span>
+              <img
+                src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png"
+                alt="Pixel Solusindo"
+                class="h-10 w-auto md:h-12"
+              />
+            </h1>
+            <div class="lang-switch mt-2 flex gap-2 text-xs uppercase tracking-[0.5em]">
+              <button class="lang-switch__btn" data-lang="id">ID</button>
+              <button class="lang-switch__btn" data-lang="en">EN</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <p class="mt-5 text-base md:text-lg leading-relaxed text-slate-600 max-w-full md:max-w-4xl">
+      <p class="mt-5 text-base md:text-lg leading-relaxed text-slate-600 max-w-full md:max-w-4xl" data-i18n="hero.description">
         Kami membangun sistem operasional dan keamanan dengan pendekatan
         <span class="font-semibold text-slate-800">standar kerja</span>,
         <span class="font-semibold text-slate-800">struktur yang rapi</span>,
@@ -587,7 +781,7 @@
     </div>
 
     <!-- CENTER : FULL WIDTH PHOTO STRIP -->
-    <div class="relative mx-0 h-[92mm]">
+    <div class="relative mx-0 h-[80mm] md:h-[90mm] min-h-[80mm] md:min-h-[90mm]">
       <img
         src="./hero.jpg"
         alt="Infrastructure & Installation Environment"
@@ -599,15 +793,15 @@
 
       <!-- caption -->
       <div class="absolute bottom-4 right-10 rounded-xl bg-white/95 backdrop-blur border border-slate-200 px-4 py-2">
-        <div class="text-xs text-slate-500">Field Implementation</div>
-        <div class="text-sm font-semibold text-slate-800">
+        <div class="text-xs text-slate-500" data-i18n="hero.captionTitle">Field Implementation</div>
+        <div class="text-sm font-semibold text-slate-800" data-i18n="hero.captionBody">
           Installation • Infrastructure • Operations
         </div>
       </div>
     </div>
 
     <!-- BOTTOM : SCOPE ICONS -->
-    <div class="px-6 pt-6 pb-10 mt-auto">
+    <div class="px-6 pt-4 pb-6 mt-4">
       <div class="grid grid-cols-2 gap-6 md:grid-cols-4 service-grid text-center">
 
         <!-- CCTV -->
@@ -619,8 +813,8 @@
               <path d="M34 20l8-8" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="service-title">CCTV Systems</div>
-          <div class="service-meta">Certified installation</div>
+          <div class="service-title" data-i18n="service.cctv.title">CCTV Systems</div>
+          <div class="service-meta" data-i18n="service.cctv.meta">Certified installation</div>
         </div>
 
         <!-- NETWORK -->
@@ -633,8 +827,8 @@
               <path d="M12 20v6l12 4l12-4v-6" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="service-title">Network</div>
-          <div class="service-meta">Structured infrastructure</div>
+          <div class="service-title" data-i18n="service.network.title">Network</div>
+          <div class="service-meta" data-i18n="service.network.meta">Structured infrastructure</div>
         </div>
 
         <!-- MRO -->
@@ -645,8 +839,8 @@
               <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="service-title">MRO</div>
-          <div class="service-meta">Preventive maintenance</div>
+          <div class="service-title" data-i18n="service.mro.title">MRO</div>
+          <div class="service-meta" data-i18n="service.mro.meta">Preventive & Corrective maintenance</div>
         </div>
 
         <!-- PROCUREMENT -->
@@ -657,8 +851,8 @@
               <path d="M18 16v-4h12v4" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
-          <div class="service-title">Procurement</div>
-          <div class="service-meta">Authorized devices</div>
+          <div class="service-title" data-i18n="service.procurement.title">Procurement</div>
+          <div class="service-meta" data-i18n="service.procurement.meta">Authorized devices</div>
         </div>
 
       </div>
@@ -668,6 +862,83 @@
 </section>
 
 
+<script>
+  (function () {
+    const langFile = "assets/lang/portfolio.json";
+    const langButtons = [];
+    let translations = {};
+    let defaultLang = "id";
+    let currentLang = defaultLang;
+
+    function updateButtons(lang) {
+      langButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+
+    function applyTranslations(lang) {
+      const dataset = translations[lang] || translations[defaultLang] || {};
+      if (!dataset) return;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+        if (!key) return;
+        const value = dataset[key];
+        if (!value) return;
+        const attrList = el.dataset.i18nAttr?.split(",").map(item => item.trim()).filter(Boolean);
+        if (attrList && attrList.length) {
+          attrList.forEach(attrName => el.setAttribute(attrName, value));
+        } else {
+          el.innerHTML = value;
+        }
+      });
+      document.documentElement.setAttribute("lang", lang);
+      currentLang = lang;
+      updateButtons(lang);
+      try {
+        localStorage.setItem("portfolioLang", lang);
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function initLangSwitcher(langData) {
+      defaultLang = langData.defaultLang || defaultLang;
+      const stored = (() => {
+        try {
+          return localStorage.getItem("portfolioLang");
+        } catch {
+          return null;
+        }
+      })();
+      const langToApply = (stored && langData.translations?.[stored]) ? stored : defaultLang;
+      applyTranslations(langToApply);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".lang-switch__btn").forEach(btn => {
+        langButtons.push(btn);
+        btn.addEventListener("click", () => {
+          const targetLang = btn.dataset.lang;
+          if (targetLang && translations[targetLang]) {
+            applyTranslations(targetLang);
+          }
+        });
+      });
+    });
+
+    fetch(langFile)
+      .then(res => res.json())
+      .then(data => {
+        translations = data.translations || {};
+        initLangSwitcher(data);
+      })
+      .catch(() => {
+        translations = {};
+        initLangSwitcher({});
+      });
+  })();
+</script>
+</body>
 
 <!-- ================= PAGE 2 : MAP PROJECT (A4 LANDSCAPE • OSM REAL MAP) ================= -->
 <!-- ================= PAGE 2 : MAP PROJECT (A4 LANDSCAPE • ANNOTATED MAP) ================= -->
@@ -681,10 +952,10 @@
 
     <!-- HEADER -->
     <div class="px-14 pt-14 pb-8">
-      <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">
+      <h2 class="text-3xl font-extrabold tracking-tight text-slate-900" data-i18n="projects.title">
         Sebaran Proyek Utama
       </h2>
-      <p class="mt-3 max-w-4xl text-lg text-slate-600">
+      <p class="mt-3 max-w-4xl text-lg text-slate-600" data-i18n="projects.description">
         Visualisasi lokasi proyek Pixel Solusindo di Bali,
         ditampilkan dalam bentuk
         <span class="font-semibold text-slate-800">annotated geographic map</span>
@@ -697,17 +968,22 @@
       <div class="map-frame">
         <div id="baliMap"></div>
         <div class="map-overlay">
-          <div class="text-xs uppercase tracking-widest text-slate-500">
-            Coverage Area
-          </div>
-          <div class="text-sm font-semibold text-slate-900">
-            Bali • Key Project Locations
-          </div>
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="map.overlay.title">
+          Coverage Area
+        </div>
+        <div class="text-sm font-semibold text-slate-900" data-i18n="map.overlay.body">
+          Bali • Key Project Locations
+        </div>
         </div>
       </div>
     </div>
 
     <!-- SOFT GAP / DIVIDER -->
+     <img
+                src="https://pixelsolusindo.com/dmcms/upload-aja/media/view.php?file=watermark-pixel-solusindo.png"
+                alt="Pixel Solusindo"
+                class="h-auto w-auto mx-auto my-10 opacity-5 "
+              />
     <!-- CLIENT HIGHLIGHTS BELOW MAP -->
   </div>
 </section>
@@ -1118,23 +1394,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- TEXT LEFT -->
       <div>
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="projects.cemagi.category">
           Government / Desa Digitalisasi
         </div>
-        <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-2 text-3xl font-extrabold text-slate-900" data-i18n="projects.cemagi.title">
           Desa Cemagi — Badung, Bali
         </h3>
 
-        <p class="mt-6 text-lg leading-relaxed text-slate-700">
+        <p class="mt-6 text-lg leading-relaxed text-slate-700" data-i18n="projects.cemagi.copy">
           Implementasi sistem CCTV berstandar untuk desa wisata dengan 70 kamera yang
           tersebar di kantor desa dan titik rawan publik, lengkap dengan monitoring real-time
           dan dokumentasi teknis untuk mendukung pengelolaan keamanan serta pelayanan kepada wisatawan.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— 70 kamera CCTV indoor &amp; outdoor untuk kantor, jalan utama, dan fasilitas umum.</li>
-          <li>— Monitoring real-time membantu pengawasan keamanan desa dan pelaporan keramaian.</li>
-          <li>— Preventive maintenance rutin serta dokumentasi untuk tim IT desa.</li>
+          <li data-i18n="projects.cemagi.bullet1">— 70 kamera CCTV indoor &amp; outdoor untuk kantor, jalan utama, dan fasilitas umum.</li>
+          <li data-i18n="projects.cemagi.bullet2">— Monitoring real-time membantu pengawasan keamanan desa dan pelaporan keramaian.</li>
+          <li data-i18n="projects.cemagi.bullet3">— Preventive & Corrective maintenance rutin serta dokumentasi untuk tim IT desa.</li>
         </ul>
       </div>
 
@@ -1162,6 +1438,8 @@ document.addEventListener("DOMContentLoaded", () => {
 </section>
 
 
+</script>
+</body>
 <!-- ===== CLIENT 2 : DESA PERERENAN ===== -->
 <section class="print-break relative overflow-hidden">
 
@@ -1195,22 +1473,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- TEXT RIGHT -->
       <div class="order-1 md:order-2">
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="projects.pererenan.category">
           Government / Public Safety
         </div>
-        <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-2 text-3xl font-extrabold text-slate-900" data-i18n="projects.pererenan.title">
           Desa Pererenan — Badung, Bali
         </h3>
 
-        <p class="mt-6 text-lg leading-relaxed text-slate-700">
+        <p class="mt-6 text-lg leading-relaxed text-slate-700" data-i18n="projects.pererenan.copy">
           Digitalisasi CCTV yang dimulai sejak 2021 memastikan tiap titik masuk desa dapat dipantau,
           membantu aspirasi masyarakat, dan memperkuat kolaborasi dengan aparat kepolisian dalam menjaga kondusivitas wilayah.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— Coverage CCTV pada jalur keluar-masuk serta titik rawan akses desa.</li>
-          <li>— Pantauan 24/7 memudahkan tim keamanan desa dan instansi kepolisian.</li>
-          <li>— Pelayanan yang merespon aspirasi warga dan mempercepat digitalisasi layanan publik.</li>
+          <li data-i18n="projects.pererenan.bullet1">— Coverage CCTV pada jalur keluar-masuk serta titik rawan akses desa.</li>
+          <li data-i18n="projects.pererenan.bullet2">— Pantauan 24/7 memudahkan tim keamanan desa dan instansi kepolisian.</li>
+          <li data-i18n="projects.pererenan.bullet3">— Pelayanan yang merespon aspirasi warga dan mempercepat digitalisasi layanan publik.</li>
         </ul>
       </div>
 
@@ -1237,22 +1515,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- TEXT LEFT -->
       <div>
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="projects.delhoka.category">
           Hospitality / Resort Networks
         </div>
-        <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-2 text-3xl font-extrabold text-slate-900" data-i18n="projects.delhoka.title">
           de Lhoka Ubud — Ubud, Bali
         </h3>
 
-        <p class="mt-6 text-lg leading-relaxed text-slate-700">
+        <p class="mt-6 text-lg leading-relaxed text-slate-700" data-i18n="projects.delhoka.copy">
           Pembaruan jaringan, instalasi Access Point, dan pencabutan kabel lama memastikan
           pengalaman tamu serta tim operasional dapat mengandalkan konektivitas stabil di seluruh properti de Lhoka Ubud.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— 70 titik jaringan yang direfresh plus 6 titik tambahan untuk Access Point baru.</li>
-          <li>— Kestabilan Wi-Fi di area publik, lobi, dan meeting space dengan koordinasi terjadwal.</li>
-          <li>— Komunikasi intensif serta tanggapan cepat atas kendala lapangan.</li>
+          <li data-i18n="projects.delhoka.bullet1">— 70 titik jaringan yang direfresh plus 6 titik tambahan untuk Access Point baru.</li>
+          <li data-i18n="projects.delhoka.bullet2">— Kestabilan Wi-Fi di area publik, lobi, dan meeting space dengan koordinasi terjadwal.</li>
+          <li data-i18n="projects.delhoka.bullet3">— Komunikasi intensif serta tanggapan cepat atas kendala lapangan.</li>
         </ul>
       </div>
 
@@ -1310,22 +1588,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- TEXT RIGHT -->
       <div class="order-1 md:order-2">
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="projects.arkac.category">
           Commercial / Mixed-use
         </div>
-        <h3 class="mt-2 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-2 text-3xl font-extrabold text-slate-900" data-i18n="projects.arkac.title">
           Arkac — Denpasar, Bali
         </h3>
 
-        <p class="mt-6 text-lg leading-relaxed text-slate-700">
+        <p class="mt-6 text-lg leading-relaxed text-slate-700" data-i18n="projects.arkac.copy">
           Penguatan sistem keamanan dengan instalasi 16 kamera CCTV pada area bisnis dan pusat layanan
           memastikan respons cepat terhadap laporan dan menjaga kenyamanan pengunjung.
         </p>
 
         <ul class="mt-6 space-y-2 text-sm text-slate-700">
-          <li>— 16 kamera indoor &amp; outdoor yang menutupi akses utama hingga area parkir.</li>
-          <li>— Monitoring 24/7 serta dokumentasi rekaman untuk analisis pola kunjungan.</li>
-          <li>— Tim respons cepat Pixel Solusindo serta rencana lanjutan untuk kelanjutan proyek.</li>
+          <li data-i18n="projects.arkac.bullet1">— 16 kamera indoor &amp; outdoor yang menutupi akses utama hingga area parkir.</li>
+          <li data-i18n="projects.arkac.bullet2">— Monitoring 24/7 serta dokumentasi rekaman untuk analisis pola kunjungan.</li>
+          <li data-i18n="projects.arkac.bullet3">— Tim respons cepat Pixel Solusindo serta rencana lanjutan untuk kelanjutan proyek.</li>
         </ul>
       </div>
 
@@ -1343,7 +1621,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <!-- BACKGROUND IMAGE -->
   <div
     class="absolute inset-0 bg-cover bg-center"
-    style="background-image:url('./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg')">
+    style="background-image:url('./top-current-clients/desaCemagi/kantor-desa-cemagi.jpeg')">
   </div>
 
   <!-- OVERLAY -->
@@ -1355,26 +1633,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- LEFT : REVIEW TEXT -->
       <div>
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="reviews.cemagi.category">
           Client Review — Government Sector
         </div>
 
-        <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-3 text-3xl font-extrabold text-slate-900" data-i18n="reviews.cemagi.title">
           Desa Cemagi, Badung
         </h3>
 
-        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
+        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic" data-i18n="reviews.cemagi.quote">
           “Secara keseluruhan pelayanan sudah sangat baik terutama dalam hal merespon permintaan terkait CCTV, sehingga kendala cepat teratasi dan sistem selalu siap dipantau.”
         </blockquote>
 
-        <div class="mt-6 text-sm text-slate-600">
+        <div class="mt-6 text-sm text-slate-600" data-i18n="reviews.cemagi.author">
           I Putu Andy Wijaya — Staff IT Desa Cemagi
         </div>
       </div>
 
       <!-- RIGHT : PERSON / CONTEXT VISUAL -->
       <div class="flex justify-center md:justify-end">
-        <div class="w-48 h-48 overflow-hidden border border-slate-200">
+        <div class="review-photo-card">
           <img
             src="./top-current-clients/desaCemagi/pak-andi-staff-desa.jpeg"
             alt="Staff IT Desa Cemagi"
@@ -1406,7 +1684,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- LEFT : PERSON -->
       <div class="order-2 md:order-1 flex justify-center md:justify-start">
-        <div class="w-48 h-48 overflow-hidden border border-slate-200">
+        <div class="review-photo-card">
           <img
             src="./top-current-clients/desa-Pererenan/bu-putu-desa-pererenan.jpeg"
             alt="Kasi Pemerintahan Desa Pererenan"
@@ -1417,19 +1695,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- RIGHT : REVIEW TEXT -->
       <div class="order-1 md:order-2">
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="reviews.pererenan.category">
           Client Review — Public Safety
         </div>
 
-        <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-3 text-3xl font-extrabold text-slate-900" data-i18n="reviews.pererenan.title">
           Desa Pererenan, Badung
         </h3>
 
-        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
+        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic" data-i18n="reviews.pererenan.quote">
           “CCTV desa berangkat dari aspirasi masyarakat; sekarang jalur masuk desa yang selama ini sulit diawasi dapat dipantau secara menyeluruh hingga membantu aparat kepolisian menjaga kondusivitas.”
         </blockquote>
 
-        <div class="mt-6 text-sm text-slate-600">
+        <div class="mt-6 text-sm text-slate-600" data-i18n="reviews.pererenan.author">
           Ibu Putu Pererenan — Kasi Pemerintahan Desa Pererenan
         </div>
       </div>
@@ -1457,26 +1735,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- TEXT LEFT -->
       <div>
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="reviews.delhoka.category">
           Client Review — Hospitality
         </div>
 
-        <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-3 text-3xl font-extrabold text-slate-900" data-i18n="reviews.delhoka.title">
           de Lhoka Ubud
         </h3>
 
-        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
+        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic" data-i18n="reviews.delhoka.quote">
           “Kami sangat puas karena pengerjaan tepat waktu sesuai timetable, komunikasi berjalan baik, dan tim cepat tanggap setiap ada kendala sehingga hasilnya sesuai kebutuhan kami.”
         </blockquote>
 
-        <div class="mt-6 text-sm text-slate-600">
+        <div class="mt-6 text-sm text-slate-600" data-i18n="reviews.delhoka.author">
           Bapak Arimbawa — IT Manager de Lhoka Ubud
         </div>
       </div>
 
       <!-- RIGHT : PERSON / CONTEXT VISUAL -->
       <div class="flex justify-center md:justify-end">
-        <div class="w-48 h-48 overflow-hidden border border-slate-200">
+        <div class="review-photo-card">
           <img
             src="./top-current-clients/deLhokaUbud/it-manager-delhokaubud.jpeg"
             alt="IT Manager de Lhoka Ubud"
@@ -1508,7 +1786,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- LEFT : PERSON -->
       <div class="order-2 md:order-1 flex justify-center md:justify-start">
-        <div class="w-48 h-48 overflow-hidden border border-slate-200">
+        <div class="review-photo-card">
           <img
             src="./top-current-clients/arkac/Arkac1pakTaufan.jpeg"
             alt="PIC Arkac"
@@ -1519,19 +1797,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- RIGHT : REVIEW TEXT -->
       <div class="order-1 md:order-2">
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="reviews.arkac.category">
           Client Review — Commercial
         </div>
 
-        <h3 class="mt-3 text-3xl font-extrabold text-slate-900">
+        <h3 class="mt-3 text-3xl font-extrabold text-slate-900" data-i18n="reviews.arkac.title">
           Arkac, Denpasar
         </h3>
 
-        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic">
+        <blockquote class="mt-8 text-xl leading-relaxed text-slate-800 italic" data-i18n="reviews.arkac.quote">
           “Overall sangat memuaskan, bintang lima; respon cepat dan koordinasi kerja sangat baik sehingga kami akan merekomendasikan Pixel Solusindo dan menggunakan layanan berikutnya.”
         </blockquote>
 
-        <div class="mt-6 text-sm text-slate-600">
+        <div class="mt-6 text-sm text-slate-600" data-i18n="reviews.arkac.author">
           Bapak Taufan — PIC Arkac
         </div>
       </div>
@@ -1556,30 +1834,26 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="relative px-14 py-32 max-w-6xl mx-auto text-white">
 
     <!-- HEADER -->
-    <div class="max-w-3xl">
-      <div class="text-xs uppercase tracking-widest text-white/70">
-        Trust & Track Record
+      <div class="max-w-3xl">
+        <div class="text-xs uppercase tracking-widest text-white/70" data-i18n="trust.title">
+          Trust & Track Record
+        </div>
+        <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-white" data-i18n="trust.subtitle">
+          Pengalaman yang Terukur, Kepercayaan yang Dibangun
+        </h2>
+        <p class="mt-4 text-white/80 text-lg leading-relaxed" data-i18n="trust.body">
+          Kepercayaan klien tidak dibangun dari klaim, tetapi dari konsistensi hasil, standar kerja, dan keberlanjutan sistem yang kami tangani.
+        </p>
       </div>
-      <h2 class="mt-3 text-3xl font-extrabold tracking-tight">
-        Pengalaman yang Terukur,
-        Kepercayaan yang Dibangun
-      </h2>
-      <p class="mt-4 text-white/80 text-lg">
-        Kepercayaan klien tidak dibangun dari klaim,
-        tetapi dari konsistensi hasil,
-        standar kerja,
-        dan keberlanjutan sistem yang kami tangani.
-      </p>
-    </div>
 
     <!-- STATS -->
-    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-y-14 gap-x-10">
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-y-14 gap-x-10 text-white">
 
       <div>
         <div class="text-5xl font-extrabold tracking-tight">
           500<span class="text-orange-400">+</span>
         </div>
-        <div class="mt-2 text-sm text-white/70 uppercase tracking-wider">
+        <div class="mt-2 text-sm uppercase tracking-wider" data-i18n="trust.stats.projects">
           Proyek Terealisasi
         </div>
       </div>
@@ -1588,7 +1862,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="text-5xl font-extrabold tracking-tight">
           300<span class="text-orange-400">+</span>
         </div>
-        <div class="mt-2 text-sm text-white/70 uppercase tracking-wider">
+        <div class="mt-2 text-sm uppercase tracking-wider" data-i18n="trust.stats.clients">
           Klien Aktif & Institusi
         </div>
       </div>
@@ -1597,7 +1871,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="text-5xl font-extrabold tracking-tight">
           10<span class="text-orange-400">+</span>
         </div>
-        <div class="mt-2 text-sm text-white/70 uppercase tracking-wider">
+        <div class="mt-2 text-sm uppercase tracking-wider" data-i18n="trust.stats.years">
           Tahun Operasional
         </div>
       </div>
@@ -1606,18 +1880,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="text-5xl font-extrabold tracking-tight">
           Bali
         </div>
-        <div class="mt-2 text-sm text-white/70 uppercase tracking-wider">
+        <div class="mt-2 text-sm uppercase tracking-wider" data-i18n="trust.stats.region">
           Wilayah Cakupan Utama
         </div>
       </div>
 
     </div>
 
-    <!-- FOOTNOTE -->
-  <div class="mt-20 max-w-2xl text-sm text-white/60 leading-relaxed">
-      Data mencerminkan pengalaman implementasi di sektor pemerintahan,
-      hospitality, komersial, dan infrastruktur operasional,
-      dengan pendekatan instalasi terstandar dan dokumentasi yang dapat dipertanggungjawabkan.
+    <div class="mt-20 max-w-2xl text-sm text-white/60 leading-relaxed" data-i18n="trust.footnote">
+      Data mencerminkan pengalaman implementasi di sektor pemerintahan, hospitality, komersial, dan infrastruktur operasional, dengan pendekatan instalasi terstandar dan dokumentasi yang dapat dipertanggungjawabkan.
     </div>
 
   </div>
@@ -1630,18 +1901,18 @@ document.addEventListener("DOMContentLoaded", () => {
     class="absolute inset-0 bg-cover bg-center"
     style="background-image:url('https://images.unsplash.com/photo-1500534314209-a26db0f5d74b?auto=format&fit=crop&w=2400&q=70')">
   </div>
-  <div class="absolute inset-0 bg-slate-900/85"></div>
+  <div class="absolute inset-0 bg-white"></div>
 
-  <div class="relative px-14 py-24 max-w-6xl mx-auto text-white">
+  <div class="relative px-14 py-24 max-w-6xl mx-auto text-slate-900">
     <div class="max-w-3xl">
-      <div class="text-xs uppercase tracking-[0.5em] text-white/70">
+      <div class="text-xs uppercase tracking-[0.5em] text-slate-500">
         Kantor Kami
       </div>
       <h2 class="mt-3 text-4xl font-extrabold tracking-tight">
-        Bangli • Lukluk • Head Office – jaringan Bali yang siap melayani
+        Bangli • Lukluk • Head Office
       </h2>
-      <p class="mt-4 text-white/80 text-lg leading-relaxed">
-        Peta ini menunjukkan titik koordinat semua kantor yang terhubung dengan tim operasional, masing-masing dengan ikon yang terbaca dan label informasi floating serta kartu detail timbal balik.
+      <p class="mt-4 text-slate-600 text-lg leading-relaxed">
+        Peta ini menunjukkan titik koordinat semua kantor yang terhubung dengan tim operasional kami di Bali. Setiap lokasi dirancang untuk memastikan respons cepat, dukungan teknis, dan layanan lapangan yang andal bagi klien kami.
       </p>
     </div>
   </div>
@@ -1652,82 +1923,93 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 
-  <div class="relative px-14 pb-24 max-w-6xl mx-auto text-white">
-    <div class="mt-10 grid gap-6 lg:grid-cols-3">
-      <article class="rounded-3xl border border-white/20 bg-white/95 p-6 text-slate-900 shadow-lg">
-        <div class="flex items-center gap-3">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10V3l8-3 8 3v7h-1V4.26L12 1.4 5 4.26V10H4zm2 2h12v10H6V12zm2 2v6h2v-4h2v4h2v-6H8z"/></svg>
-          </span>
-          <div>
-            <p class="text-lg font-semibold">Pixel Solusindo Head Office</p>
-            <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Information services</p>
+  <div class="relative w-full pb-24">
+    <div class="relative z-10 space-y-10">
+      <div class="branch-profile-row">
+        <div class="branch-profile-image" style="background-image:url('assets/kantor-pixel-foto/pixel-headquarter-picture.png');" aria-hidden="true"></div>
+        <div class="branch-profile-content">
+        <p class="branch-profile-label" data-i18n="branches.head.label">Head Office</p>
+          <h3 class="branch-profile-title" data-i18n="branches.head.title">Pixel Solusindo Head Office</h3>
+          <p class="branch-profile-meta" data-i18n="branches.head.meta">Information services</p>
+          <div class="branch-rating">
+            <div class="rating-stars">
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+            </div>
+            <span class="text-[0.65rem] uppercase tracking-[0.4em] text-slate-500" data-i18n="branches.head.source">Google</span>
+          </div>
+          <p class="branch-profile-text" data-i18n="branches.head.address">
+            Jl. Kopral I Nym Suwena, Buduk, Mengwi, Badung, Bali 80351<br />
+            +62 811-3961-8857 · Open · Closes 4.30 pm · Code 95Q6+X5
+          </p>
+          <div class="branch-profile-actions">
+            <a href="https://share.google/Rb1J0QatYZUCNh3DI" target="_blank" rel="noreferrer" data-i18n="branches.head.cta1">View on Google Maps</a>
+            <a href="tel:+6281139618857" class="secondary" data-i18n="branches.head.cta2">Call / WhatsApp</a>
           </div>
         </div>
-        <div class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700">
-          <span class="text-orange-500">5.0</span>
-          <span class="text-slate-500">(3 ulasan)</span>
-        </div>
-        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
-          Jl. Kopral I Nym Suwena, Buduk, Mengwi, Badung, Bali 80351<br>
-          +62 811-3961-8857 · Open · Closes 4.30 pm · Code 95Q6+X5
-        </p>
-        <a href="https://share.google/Rb1J0QatYZUCNh3DI" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900" target="_blank" rel="noreferrer">
-          View on Google Maps
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 7-1.41 1.41L13 6.83V20h-2V6.83l-4.59 4.58L5 10z"/></svg>
-        </a>
-      </article>
+      </div>
 
-      <article class="rounded-3xl border border-white/20 bg-white/95 p-6 text-slate-900 shadow-lg">
-        <div class="flex items-center gap-3">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h8v2H4z"/></svg>
-          </span>
-          <div>
-            <p class="text-lg font-semibold">Pixel Solusindo Cabang Lukluk</p>
-            <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Security system supplier</p>
+      <div class="branch-profile-row branch-profile-row--reverse">
+        <div class="branch-profile-content">
+          <p class="branch-profile-label" data-i18n="branches.lukluk.label">Cabang Lukluk</p>
+          <h3 class="branch-profile-title" data-i18n="branches.lukluk.title">Pixel Solusindo Cabang Lukluk</h3>
+          <p class="branch-profile-meta" data-i18n="branches.lukluk.meta">Security system supplier</p>
+          <div class="branch-rating">
+            <div class="rating-stars">
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+            </div>
+            <span class="text-[0.65rem] uppercase tracking-[0.4em] text-slate-500" data-i18n="branches.lukluk.source">Google</span>
+          </div>
+          <p class="branch-profile-text" data-i18n="branches.lukluk.address">
+            C58R+W63, Jl. Raya Perang, Lukluk, Mengwi, Kabupaten Badung, Bali 80351<br />
+            +62 811-3961-8857 · Open · Closes 4.30 pm
+          </p>
+          <div class="branch-profile-actions">
+            <a href="https://share.google/9sk8fGC8WfEKt9hhl" target="_blank" rel="noreferrer" data-i18n="branches.lukluk.cta1">View on Google Maps</a>
+            <a href="https://pixelsolusindo.com" class="secondary" data-i18n="branches.lukluk.cta2">Visit Branch</a>
           </div>
         </div>
-        <div class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700">
-          <span class="text-orange-500">4.6</span>
-          <span class="text-slate-500">(9 ulasan)</span>
-        </div>
-        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
-          C58R+W63, Jl. Raya Perang, Lukluk, Mengwi, Kabupaten Badung, Bali 80351<br>
-          +62 811-3961-8857 · Open · Closes 4.30 pm
-        </p>
-        <a href="https://share.google/9sk8fGC8WfEKt9hhl" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900" target="_blank" rel="noreferrer">
-          View on Google Maps
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 7-1.41 1.41L13 6.83V20h-2V6.83l-4.59 4.58L5 10z"/></svg>
-        </a>
-      </article>
+        <div class="branch-profile-image" style="background-image:url('assets/kantor-pixel-foto/pixel-lukluk-picture.png');" aria-hidden="true"></div>
+      </div>
 
-      <article class="rounded-3xl border border-white/20 bg-white/95 p-6 text-slate-900 shadow-lg">
-        <div class="flex items-center gap-3">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h16v2H4zm0 4h16v11H4z"/></svg>
-          </span>
-          <div>
-            <p class="text-lg font-semibold">Pixel Solusindo Cabang Bangli</p>
-            <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Computer store</p>
+      <div class="branch-profile-row">
+        <div class="branch-profile-image" style="background-image:url('assets/kantor-pixel-foto/pixel-bangli-picture.png');" aria-hidden="true"></div>
+        <div class="branch-profile-content">
+          <p class="branch-profile-label" data-i18n="branches.bangli.label">Cabang Bangli</p>
+          <h3 class="branch-profile-title" data-i18n="branches.bangli.title">Pixel Solusindo Cabang Bangli</h3>
+          <p class="branch-profile-meta" data-i18n="branches.bangli.meta">Computer store</p>
+          <div class="branch-rating">
+            <div class="rating-stars">
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+              <svg class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 0 0 .95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 0 0-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.455a1 1 0 0 0-1.175 0l-3.37 2.455c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 0 0-.364-1.118L2.064 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 0 0 .95-.69l1.286-3.957z"/></svg>
+            </div>
+            <span class="text-[0.65rem] uppercase tracking-[0.4em] text-slate-500" data-i18n="branches.bangli.source">Google</span>
+          </div>
+          <p class="branch-profile-text" data-i18n="branches.bangli.address">
+            Jl. Raya Kayuambua, Tiga, Kec. Susut, Kabupaten Bangli, Bali 80661<br />
+            +62 812-2682-4787 · Open · Closes 5.00 pm
+          </p>
+          <div class="branch-profile-actions">
+            <a href="https://share.google/p9qt0jlf46Jpq0xca" target="_blank" rel="noreferrer" data-i18n="branches.bangli.cta1">View on Google Maps</a>
+            <a href="https://pixelsolusindo.com" class="secondary" data-i18n="branches.bangli.cta2">Visit Store</a>
           </div>
         </div>
-        <div class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700">
-          <span class="text-orange-500">5.0</span>
-          <span class="text-slate-500">(77 ulasan)</span>
-        </div>
-        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
-          Jl. Raya Kayuambua, Tiga, Kec. Susut, Kabupaten Bangli, Bali 80661<br>
-          +62 812-2682-4787 · Open · Closes 5.00 pm
-        </p>
-        <a href="https://share.google/p9qt0jlf46Jpq0xca" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900" target="_blank" rel="noreferrer">
-          View on Google Maps
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 7-1.41 1.41L13 6.83V20h-2V6.83l-4.59 4.58L5 10z"/></svg>
-        </a>
-      </article>
+      </div>
     </div>
   </div>
 </section>
+
 
 <!-- ================= PAGE 6 : CONTACT & ENGAGEMENT (FULL WIDTH • BENCHMARK STYLE) ================= -->
 <section class="print-break relative overflow-hidden">
@@ -1746,15 +2028,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <div class="max-w-3xl">
 
-      <div class="text-xs uppercase tracking-widest text-white/70">
+      <div class="text-xs uppercase tracking-widest text-white/70" data-i18n="contact.title">
         Contact & Engagement
       </div>
 
-      <h2 class="mt-4 text-3xl font-extrabold tracking-tight">
+      <h2 class="mt-4 text-3xl font-extrabold tracking-tight" data-i18n="contact.heading">
         Mari Diskusikan Kebutuhan Proyek Anda
       </h2>
 
-      <p class="mt-6 text-lg leading-relaxed text-white/85">
+      <p class="mt-6 text-lg leading-relaxed text-white/85" data-i18n="contact.copy">
         Setiap proyek memiliki konteks dan tantangan yang berbeda.
         Kami mendekati setiap kebutuhan dengan
         <span class="font-semibold text-white">standar kerja yang jelas</span>,
@@ -1767,19 +2049,19 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="mt-14 space-y-6 text-sm">
 
         <div>
-          <div class="text-xs uppercase tracking-wider text-white/60">
+          <div class="text-xs uppercase tracking-wider text-white/60" data-i18n="contact.emailLabel">
             Email
           </div>
-          <div class="mt-1 font-semibold">
+          <div class="mt-1 font-semibold" data-i18n="contact.emailValue">
             info@pixelsolusindo.com
           </div>
         </div>
 
         <div>
-          <div class="text-xs uppercase tracking-wider text-white/60">
+          <div class="text-xs uppercase tracking-wider text-white/60" data-i18n="contact.phoneLabel">
             Phone / WhatsApp
           </div>
-          <div class="mt-1 font-semibold">
+          <div class="mt-1 font-semibold" data-i18n="contact.phoneValue">
             +62 811-3961-8857
           </div>
         </div>
@@ -1787,7 +2069,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <!-- FOOT NOTE -->
-      <div class="mt-20 text-sm text-white/60 leading-relaxed">
+      <div class="mt-20 text-sm text-white/60 leading-relaxed" data-i18n="contact.footnote">
         Diskusi awal tidak mengikat.
         Kami memprioritaskan kejelasan kebutuhan,
         kesesuaian solusi,
@@ -1816,21 +2098,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <div class="max-w-3xl">
 
-        <div class="text-xs uppercase tracking-widest text-slate-500">
+        <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="final.thanks">
           <span>Atas Perhatiannya Kami Ucapkan</span>
         </div>
 
-      <h2 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900">
+      <h2 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900" data-i18n="final.title">
         Terima Kasih
       </h2>
 
-      <p class="mt-8 text-lg leading-relaxed text-slate-700">
+      <p class="mt-8 text-lg leading-relaxed text-slate-700" data-i18n="final.copy1">
         Portofolio ini merepresentasikan pendekatan kerja kami
         dalam membangun sistem operasional dan keamanan
         yang terstruktur, terdokumentasi, dan berkelanjutan.
       </p>
 
-      <p class="mt-6 text-lg leading-relaxed text-slate-700">
+      <p class="mt-6 text-lg leading-relaxed text-slate-700" data-i18n="final.copy2">
         Kami percaya bahwa sistem yang baik
         tidak harus terlihat kompleks,
         tetapi harus <span class="font-semibold text-slate-900">bekerja konsisten</span>,
@@ -1853,6 +2135,102 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </section>
 
+</section>
 
+<script>
+  (function () {
+    const langFile = "assets/lang/portfolio.json";
+    const langButtons = [];
+    let translations = {};
+    let defaultLang = "id";
+    const attrCache = {};
+
+    function updateButtons(lang) {
+      langButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+
+    function applyTranslations(lang) {
+      const dataset = translations[lang] || translations[defaultLang] || {};
+      if (!dataset) return;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+        if (!key) return;
+        const value = dataset[key];
+        if (!value) return;
+        const attrList = attrCache[el.dataset.i18nAttr] || (attrCache[el.dataset.i18nAttr] = (el.dataset.i18nAttr || "").split(",").map(item => item.trim()).filter(Boolean));
+        if (attrList.length) {
+          attrList.forEach(attrName => el.setAttribute(attrName, value));
+        } else {
+          el.innerHTML = value;
+        }
+      });
+      document.documentElement.setAttribute("lang", lang);
+      updateButtons(lang);
+      try {
+        localStorage.setItem("portfolioLang", lang);
+      } catch {
+        // ignore
+      }
+    }
+
+    function initLangSwitcher(langData) {
+      defaultLang = langData.defaultLang || defaultLang;
+      const storedLang = (() => {
+        try {
+          return localStorage.getItem("portfolioLang");
+        } catch {
+          return null;
+        }
+      })();
+      const langToApply = storedLang && langData.translations?.[storedLang] ? storedLang : defaultLang;
+      applyTranslations(langToApply);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".lang-switch__btn").forEach(btn => {
+        langButtons.push(btn);
+        btn.addEventListener("click", () => {
+          const targetLang = btn.dataset.lang;
+          if (targetLang && translations[targetLang]) {
+            applyTranslations(targetLang);
+          }
+        });
+      });
+    });
+
+    fetch(langFile)
+      .then(res => res.json())
+      .then(data => {
+        translations = data.translations || {};
+        initLangSwitcher(data);
+      })
+      .catch(() => {
+        translations = {};
+        initLangSwitcher({});
+      });
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section");
+    sections.forEach(section => section.classList.add("section-animate"));
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
 </body>
 </html>
